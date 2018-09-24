@@ -2,14 +2,28 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import { AsyncStorage } from 'react-native'
 
 import { Provider } from 'react-redux';
 import store from './store'
+import LoginForm from './components/LoginForm';
+import LoginScreen from './screens/LoginScreen';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    isLoggedIn: false
   };
+
+  async componentDidMount() {
+    let check = await this._loginCheck()
+    if (check) {
+      this.setState({
+        ...this.state,
+        isLoggedIn: true
+      })
+    }
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -25,7 +39,9 @@ export default class App extends React.Component {
         <Provider store={store()}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
+            
+            {this.state.isLoggedIn ? <AppNavigator /> : <LoginScreen />}
+
           </View>
         </Provider>
       );
@@ -57,6 +73,16 @@ export default class App extends React.Component {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
+
+  _loginCheck = async () => {
+    try {
+      const token = await AsyncStorage.getItem('hermit-token')
+      if (token) return true
+      else return false
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 
 const styles = StyleSheet.create({
