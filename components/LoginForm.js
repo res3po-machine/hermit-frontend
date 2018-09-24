@@ -28,13 +28,20 @@ class LoginForm extends Component {
         })
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault()
-        this.props.userLogin(this.state)
-        this.setState({
-            email: '',
-            password: ''
-        })
+        try {
+            await this.props.userLogin(this.state)
+            this.setState({
+                email: '',
+                password: ''
+            })
+            this.props.navigation('AuthLoading')
+
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     render = () => {
@@ -45,13 +52,12 @@ class LoginForm extends Component {
  
                     <FormLabel for="email">Email:</FormLabel>
                     {/* Set value to state: this is for convenience */}
-                    <FormInput onChangeText={(text) => this.onChange({name: "email", value: text})}  value={this.state.email} type="email" name="email" />
+                    <FormInput onChangeText={(text) => this.onChange({name: "email", value: text})}  value={this.state.email} autoCapitalize="none" textContentType="emailAddress" name="email" />
 
                     <FormLabel for="password">Password:</FormLabel>
-                    <FormInput onChangeText={(text) => this.onChange({name: "password", value: text})} value={this.state.password} type="password" name="password" />
+                    <FormInput onChangeText={(text) => this.onChange({name: "password", value: text})} value={this.state.password} autoCapitalize="none" textContentType="password" name="password" />
 
                     <Button raised onPress={this.onSubmit} title="Login" />
-                    <Text>No Account? Signup!</Text>
 
                 </Card>
 

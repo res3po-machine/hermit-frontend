@@ -7,5 +7,5 @@ import commentReducer from './reducers/commentReducer'
 import favReducer from './reducers/favReducer'
 import userReducer from './reducers/userReducer'
 
-const reducers = combineReducers({ comments: commentReducer, fav_trails: favReducer, user: userReducer })
+const reducers = combineReducers({ comments: commentReducer, fav_trails: favReducer, users: userReducer })
 export default () => createStore(reducers, applyMiddleware(thunkMiddleware, logger))

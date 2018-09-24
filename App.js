@@ -9,23 +9,19 @@ import store from './store'
 import LoginForm from './components/LoginForm';
 import LoginScreen from './screens/LoginScreen';
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+const mapStateToProps = ({user}) => ({user})
+
 export default class App extends React.Component {
   state = {
-    isLoadingComplete: false,
-    isLoggedIn: false
+    isLoadingComplete: false
   };
 
-  async componentDidMount() {
-    let check = await this._loginCheck()
-    if (check) {
-      this.setState({
-        ...this.state,
-        isLoggedIn: true
-      })
-    }
-  }
-
   render() {
+    // Remove when finished checking login
+    AsyncStorage.clear()
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -40,7 +36,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             
-            {this.state.isLoggedIn ? <AppNavigator /> : <LoginScreen />}
+            <AppNavigator />
 
           </View>
         </Provider>
@@ -73,16 +69,6 @@ export default class App extends React.Component {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
-
-  _loginCheck = async () => {
-    try {
-      const token = await AsyncStorage.getItem('hermit-token')
-      if (token) return true
-      else return false
-    } catch (e) {
-      console.log(e)
-    }
-  }
 }
 
 const styles = StyleSheet.create({
@@ -91,3 +77,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
