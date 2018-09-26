@@ -4,31 +4,33 @@ import { List, ListItem } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getTrails } from '../actions/trailActions'
+import { getTrails, getBuzz } from '../actions/trailActions'
 
 const mapStateToProps = ({trails}) => ({trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
-    getTrails
+    getTrails, getBuzz
 }, dispatch)
 
 class TrailList extends Component {
     async componentDidMount() {
-
-
-        // console.log('hi', navigator)
         navigator.geolocation.getCurrentPosition(
-            (position) => {
+            async (position) => {
                 console.log(position)
-                this.props.getTrails({ 
+                await this.props.getTrails({ 
                     lat: position.coords.latitude,
-                    long: position.coords.longitude
+                    long: position.coords.longitude,
                 })
+                await this.props.getBuzz(this.props.trails.data, new Date(Date.now()))
             },
             (error) => console.log(error)
         )
-        // console.log(this.props.trails.data)
-        // this.props.getTrails()
+        
     }
+
+    // async componentDidUpdate() {
+    //     const today = new Date(Date.now())
+    //     await this.props.getBuzz(this.props.trails.data, today)
+    // }
     
     render() {
        return (
@@ -43,7 +45,7 @@ class TrailList extends Component {
                         subtitle={
                             <View>
                                 <Text style={styles.subtitle}>{item.location}</Text>
-                                <Text style={styles.subtitle}>Stars: {item.stars} | Difficulty: {item.difficulty}</Text>
+                                <Text style={styles.subtitle}>Stars: {item.stars} | Difficulty: {item.difficulty} | Buzz: {item.buzz ? item.buzz[0] : 'null'}</Text>
                             </View>
                         }
                         avatar={{ uri: item.imgSmallMed }}
