@@ -12,6 +12,9 @@ export const BUZZ_PENDING = 'BUZZ_PENDING'
 export const BUZZ_SUCCESS = 'BUZZ_SUCCESS'
 export const BUZZ_SEARCH_FAILURE = 'BUZZ_SEARCH_FAILURE'
 
+export const TRAIL_SELECT = 'TRAIL_SELECT'
+export const SWITCH_VIEW = 'SWITCH_VIEW'
+
 const BASE_URL = 'http://localhost:5000/api'
 
 export const getTrails = ({ lat, long, maxDistance, date }) => {
@@ -25,6 +28,18 @@ export const getTrails = ({ lat, long, maxDistance, date }) => {
         } catch (e) {
             dispatch({type: TRAIL_SEARCH_FAILURE, payload: e})
         }
+    }
+}
+
+export const selectOneTrail = (id) => {
+    return (dispatch) => {
+        dispatch({type: TRAIL_SELECT, payload: id})
+    }
+}
+
+export const switchView = (index) => {
+    return (dispatch) => {
+        dispatch({type: SWITCH_VIEW, payload: index === 0 ? 1 : 0})
     }
 }
 

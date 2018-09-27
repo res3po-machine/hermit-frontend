@@ -17,7 +17,7 @@ import TrailList from '../components/TrailList'
 
 export default class TrailsScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Local Trails',
   };
 
   render() {
@@ -26,7 +26,7 @@ export default class TrailsScreen extends React.Component {
       <View style={styles.container}>
         <SearchBar showLoading darkTheme placeholder="Search trails by name..." />
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          <TrailList />
+          <TrailList navigation={this.props.navigation.navigate} />
         </ScrollView>
 
       </View>
@@ -38,7 +38,6 @@ export default class TrailsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
     backgroundColor: '#fff',
   },
   developmentModeText: {
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 0,
   },
   welcomeContainer: {
     alignItems: 'center',

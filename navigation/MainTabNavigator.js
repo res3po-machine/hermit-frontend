@@ -4,12 +4,14 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import TrailsScreen from '../screens/TrailsScreen';
+import TrailsProfile from '../screens/TrailProfile'
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 
 const TrailsStack = createStackNavigator({
   Home: TrailsScreen,
+  Profile: TrailsProfile
 });
 
 TrailsStack.navigationOptions = {

@@ -4,11 +4,11 @@ import { List, ListItem } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getTrails, getBuzz } from '../actions/trailActions'
+import { getTrails, getBuzz, selectOneTrail } from '../actions/trailActions'
 
 const mapStateToProps = ({trails}) => ({trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
-    getTrails, getBuzz
+    getTrails, getBuzz, selectOneTrail
 }, dispatch)
 
 class TrailList extends Component {
@@ -27,6 +27,11 @@ class TrailList extends Component {
         
     }
 
+    select = (id) => {
+        this.props.selectOneTrail(id)
+        this.props.navigation('Profile')
+    }
+
     // async componentDidUpdate() {
     //     const today = new Date(Date.now())
     //     await this.props.getBuzz(this.props.trails.data, today)
@@ -41,6 +46,7 @@ class TrailList extends Component {
                     return (
                         <ListItem 
                         key={item.id}
+                        onPress={() => this.select(item.id)}
                         title={`${item.name}`}
                         subtitle={
                             <View>

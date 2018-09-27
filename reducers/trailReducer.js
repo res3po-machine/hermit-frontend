@@ -5,7 +5,9 @@ import {
     LOAD_MORE,
     BUZZ_PENDING,
     BUZZ_SUCCESS,
-    BUZZ_SEARCH_FAILURE
+    BUZZ_SEARCH_FAILURE,
+    TRAIL_SELECT,
+    SWITCH_VIEW
 } from '../actions/trailActions'
 
 let initialState = {
@@ -14,6 +16,8 @@ let initialState = {
     data: [],
     visualMax: 10,
     error: null,
+    trailSelect: null,
+    profView: 0
 }
 
 export default (state=initialState, action) => {
@@ -32,6 +36,10 @@ export default (state=initialState, action) => {
             return {...state, buzzLoading: false, data: action.payload}
         case BUZZ_SEARCH_FAILURE:
             return {...state, buzzLoading: false, error: action.payload}
+        case TRAIL_SELECT:
+            return {...state, trailSelect: action.payload}
+        case SWITCH_VIEW:
+            return {...state, profView: action.payload }
         default:
             return state
     }
