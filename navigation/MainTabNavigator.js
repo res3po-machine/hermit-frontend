@@ -5,13 +5,15 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import TrailsScreen from '../screens/TrailsScreen';
 import TrailsProfile from '../screens/TrailProfile'
+import CommentPage from '../screens/CommentPage'
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 
 const TrailsStack = createStackNavigator({
   Home: TrailsScreen,
-  Profile: TrailsProfile
+  Profile: TrailsProfile,
+  Comment: CommentPage
 });
 
 TrailsStack.navigationOptions = {

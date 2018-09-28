@@ -29,7 +29,7 @@ export const userLogin = ({ email, password }) => {
                 }
             })
             // console.log(user)
-            saveToken(response.data.token);
+            saveToken(response.data.token, user.data.user.id);
             dispatch({
                 type: USER_LOGIN_SUCCESS,
                 payload: user.data.user
@@ -74,11 +74,17 @@ export const userSignup = ({ firstName, lastName, email, username, password, pro
     }
 }
 
-const saveToken = async (token) => {
+// const getUser = async (token) => {
+//     try {
+
+//     }
+// }
+
+const saveToken = async (token, id) => {
     try {
         // let tokenString = await JSON.stringify(token)
         console.log('hello')
-        await AsyncStorage.setItem('hermitToken', token)
+        await AsyncStorage.setItem('hermitToken', JSON.stringify({token, id}))
     } catch (e) {
         console.log(e)
     }
