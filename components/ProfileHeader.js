@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { Avatar, Card, Divider, ButtonGroup } from 'react-native-elements'
+import FavHeart from './FavHeart'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -29,6 +30,7 @@ class ProfileHeader extends Component {
                 <Text>
                 Difficulty: {thisTrail.difficulty} | Stars: {thisTrail.stars} ({thisTrail.starVotes}) | Buzz: {this.props.trails.buzz} |
                 </Text>
+                <FavHeart />
                 <Divider style={{paddingVertical: 10, backgroundColor: 'white'}} />
                 <ButtonGroup
                     buttons={['COMMENTS', 'PICS']}

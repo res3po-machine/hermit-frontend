@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import { AsyncStorage } from 'react-native'
 import { SearchBar, Icon } from 'react-native-elements'
 
 import { MonoText } from '../components/StyledText';
@@ -16,10 +17,26 @@ import LoginForm from '../components/LoginForm';
 import TrailList from '../components/TrailList'
 import Toolbar from '../components/Toolbar'
 
-export default class TrailsScreen extends React.Component {
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { getFavsUser } from '../actions/favActions'
+
+const mapStateToProps = ({fav_trails}) => ({fav_trails})
+const mapDispatchtoProps = (dispatch) => bindActionCreators({
+  getFavsUser
+}, dispatch)
+
+class TrailsScreen extends React.Component {
   static navigationOptions = {
     title: 'Local Trails',
   };
+
+  componentDidMount = async () => {
+    const preToken = await AsyncStorage.getItem('hermitToken')
+    const token = JSON.parse(preToken)
+    console.log('hi')
+    await this.props.getFavsUser(token.id, token.token)
+} 
 
   render() {
     console.log(this.props)
@@ -35,6 +52,8 @@ export default class TrailsScreen extends React.Component {
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchtoProps)(TrailsScreen)
 
 const styles = StyleSheet.create({
   container: {

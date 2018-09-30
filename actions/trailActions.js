@@ -25,7 +25,6 @@ export const getTrails = ({ lat, long, maxDistance, maxTrail }) => {
         try {
             dispatch({type: TRAIL_SEARCH_PENDING})
             let response = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxResults=${maxTrail}&key=200355674-2678e760ceac9155c45dc4d568511bda${maxDistance ? '&maxDistance=' + maxDistance : ''}`)
-            console.log(response)
             dispatch({type: TRAIL_SEARCH_SUCCESS, payload: response.data.trails})
             
         } catch (e) {
