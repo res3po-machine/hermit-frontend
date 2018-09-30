@@ -20,6 +20,7 @@
     "react": "16.3.1",
     "react-dom": "^16.5.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-calendars": "^1.21.0",
     "react-native-elements": "^0.19.1",
     "react-navigation": "^2.9.3",
     "react-redux": "^5.0.7",

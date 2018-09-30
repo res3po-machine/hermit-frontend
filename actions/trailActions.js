@@ -7,6 +7,7 @@ export const TRAIL_SEARCH_PENDING = 'TRAIL_SEARCH_PENDING'
 export const TRAIL_SEARCH_SUCCESS = 'TRAIL_SEARCH_SUCCESS'
 export const TRAIL_SEARCH_FAILURE = 'TRAIL_SEARCH_FAILURE'
 export const LOAD_MORE = 'LOAD_MORE'
+export const RESET_LOAD = 'RESET_LOAD'
 
 export const BUZZ_PENDING = 'BUZZ_PENDING'
 export const BUZZ_SUCCESS = 'BUZZ_SUCCESS'
@@ -15,13 +16,15 @@ export const BUZZ_SEARCH_FAILURE = 'BUZZ_SEARCH_FAILURE'
 export const TRAIL_SELECT = 'TRAIL_SELECT'
 export const SWITCH_VIEW = 'SWITCH_VIEW'
 
+export const DATE_CHANGE = 'DATE_CHANGE'
+
 const BASE_URL = 'http://localhost:5000/api'
 
-export const getTrails = ({ lat, long, maxDistance, date }) => {
+export const getTrails = ({ lat, long, maxDistance, maxTrail }) => {
     return async (dispatch) => {
         try {
             dispatch({type: TRAIL_SEARCH_PENDING})
-            let response = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxResults=10&key=200355674-2678e760ceac9155c45dc4d568511bda${maxDistance ? '&maxDistance=' + maxDistance : ''}`)
+            let response = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxResults=${maxTrail}&key=200355674-2678e760ceac9155c45dc4d568511bda${maxDistance ? '&maxDistance=' + maxDistance : ''}`)
             console.log(response)
             dispatch({type: TRAIL_SEARCH_SUCCESS, payload: response.data.trails})
             
@@ -43,18 +46,36 @@ export const switchView = (index) => {
     }
 }
 
-export const getBuzz = (trails, date) => {
+export const getBuzz = (trail, date) => {
     return async (dispatch) => {
         try {
             dispatch({type: BUZZ_PENDING})
             let response = await axios.post(`${BASE_URL}/buzz`, {
-                trails,
+                trail,
                 date
             })
             dispatch({type: BUZZ_SUCCESS, payload: response.data.data})
         } catch (e) {
             dispatch({type: BUZZ_SEARCH_FAILURE, payload: e})
         }
+    }
+}
+
+export const dateChange = (date) => {
+    return (dispatch) => {
+        dispatch({type: DATE_CHANGE, payload: new Date(date)})
+    }
+}
+
+export const moreTrails = () => {
+    return (dispatch) => {
+        dispatch({type: LOAD_MORE})
+    }
+}
+
+export const resetLoad = () => {
+    return (dispatch) => {
+        dispatch({type: RESET_LOAD})
     }
 }
 

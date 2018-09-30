@@ -9,11 +9,12 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import { SearchBar } from 'react-native-elements'
+import { SearchBar, Icon } from 'react-native-elements'
 
 import { MonoText } from '../components/StyledText';
 import LoginForm from '../components/LoginForm';
 import TrailList from '../components/TrailList'
+import Toolbar from '../components/Toolbar'
 
 export default class TrailsScreen extends React.Component {
   static navigationOptions = {
@@ -24,7 +25,7 @@ export default class TrailsScreen extends React.Component {
     console.log(this.props)
     return (
       <View style={styles.container}>
-        <SearchBar showLoading darkTheme placeholder="Search trails by name..." />
+        <Toolbar />
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <TrailList navigation={this.props.navigation.navigate} />
         </ScrollView>
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 0,
+    position: 'relative'
   },
   welcomeContainer: {
     alignItems: 'center',
