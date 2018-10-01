@@ -62,7 +62,9 @@ export const getBuzz = (trail, date) => {
 
 export const dateChange = (date) => {
     return (dispatch) => {
-        dispatch({type: DATE_CHANGE, payload: new Date(date)})
+        const clickDate = new Date(date)
+        clickDate.setDate(clickDate.getDate() + 1)
+        dispatch({type: DATE_CHANGE, payload: clickDate})
     }
 }
 

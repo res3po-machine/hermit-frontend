@@ -9,6 +9,10 @@ export const USER_SIGNUP_PENDING = 'USER_SIGNUP_PENDING'
 export const USER_SIGNUP_SUCCESS = 'USER_SIGNUP_SUCCESS'
 export const USER_SIGNUP_FAILED = 'USER_SIGNUP_FAILED'
 
+export const GET_USER = 'GET_USER'
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_USER_FAILURE = 'GET_USER_FAILURE'
+
 export const USER_LOGOUT = 'USER_LOGOUT'
 
 const BASE_URL = 'http://localhost:5000/api'
@@ -39,6 +43,22 @@ export const userLogin = ({ email, password }) => {
                 type: USER_LOGIN_FAILED,
                 payload: e
             })
+        }
+    }
+}
+
+export const getUser = (token) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: GET_USER})
+            let user = await axios.get(`${BASE_URL}/users/${token.id}`, {
+                headers: {
+                    authorization: `Bearer ${token.token}`
+                }
+            })
+            dispatch({type: GET_USER_SUCCESS, payload: user.data.user})
+        } catch (e) {
+            dispatch({type: GET_USER_FAILURE, payload: e})
         }
     }
 }
@@ -74,16 +94,21 @@ export const userSignup = ({ firstName, lastName, email, username, password, pro
     }
 }
 
-// const getUser = async (token) => {
-//     try {
-
-//     }
-// }
+export const userLogout = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({type: USER_LOGOUT})
+            await AsyncStorage.removeItem('hermitToken')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 const saveToken = async (token, id) => {
     try {
         // let tokenString = await JSON.stringify(token)
-        console.log('hello')
+        // console.log('hello')
         await AsyncStorage.setItem('hermitToken', JSON.stringify({token, id}))
     } catch (e) {
         console.log(e)

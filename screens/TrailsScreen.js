@@ -20,10 +20,11 @@ import Toolbar from '../components/Toolbar'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getFavsUser } from '../actions/favActions'
+import { getUser } from '../actions/userActions'
 
 const mapStateToProps = ({fav_trails}) => ({fav_trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
-  getFavsUser
+  getFavsUser, getUser
 }, dispatch)
 
 class TrailsScreen extends React.Component {
@@ -36,6 +37,7 @@ class TrailsScreen extends React.Component {
     const token = JSON.parse(preToken)
     console.log('hi')
     await this.props.getFavsUser(token.id, token.token)
+    await this.props.getUser(token)
 } 
 
   render() {

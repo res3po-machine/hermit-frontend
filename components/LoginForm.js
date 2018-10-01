@@ -55,7 +55,7 @@ class LoginForm extends Component {
                     <FormInput onChangeText={(text) => this.onChange({name: "email", value: text})}  value={this.state.email} autoCapitalize="none" textContentType="emailAddress" name="email" />
 
                     <FormLabel for="password">Password:</FormLabel>
-                    <FormInput onChangeText={(text) => this.onChange({name: "password", value: text})} value={this.state.password} autoCapitalize="none" textContentType="password" name="password" />
+                    <FormInput onChangeText={(text) => this.onChange({name: "password", value: text})} value={this.state.password} autoCapitalize="none" secureTextEntry={true} name="password" />
 
                     <Button raised onPress={this.onSubmit} title="Login" />
 
