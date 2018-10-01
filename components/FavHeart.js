@@ -4,11 +4,11 @@ import { Icon } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { favTrail, unFavTrail } from '../actions/favActions'
+import { favTrail, unFavTrail, getFavsTrail, getFavsFull } from '../actions/favActions'
 
 const mapStateToProps = ({fav_trails, trails}) => ({fav_trails, trails})
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    favTrail, unFavTrail
+    favTrail, unFavTrail, getFavsTrail, getFavsFull
 }, dispatch)
 
 class FavHeart extends Component {
@@ -34,14 +34,20 @@ class FavHeart extends Component {
         const preToken = await AsyncStorage.getItem('hermitToken')
         const token = JSON.parse(preToken)
         await this.props.favTrail(token.id, this.props.trails.trailSelect, token.token)
+        await this.props.getFavsTrail(this.props.trails.trailSelect, token.token)
         this.load()
+        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
+        await this.props.getFavsFull(favs)
     }
 
     unFav = async () => {
         const preToken = await AsyncStorage.getItem('hermitToken')
         const token = JSON.parse(preToken)
         await this.props.unFavTrail(token.id, this.props.trails.trailSelect, token.token)
+        await this.props.getFavsTrail(this.props.trails.trailSelect, token.token)
         this.load()
+        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
+        await this.props.getFavsFull(favs)
     }
 
     render = () => {

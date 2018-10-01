@@ -10,12 +10,16 @@ import {
     UNFAV_TRAIL_FAILURE,
     GET_TRAIL_FAVS,
     GET_TRAIL_FAVS_SUCCESS,
-    GET_TRAIL_FAVS_FAIL
+    GET_TRAIL_FAVS_FAIL,
+    GET_FULL_FAVS,
+    GET_FULL_FAVS_SUCCESS,
+    GET_FULL_FAVS_FAILURE,
 } from '../actions/favActions'
 
 let initialState = {
     isLoading: false,
     favs: [],
+    full: [],
     count: null,
     error: null
 }
@@ -46,6 +50,12 @@ export default (state=initialState, action) => {
             return {...state, count: action.payload }
         case GET_TRAIL_FAVS_FAIL:
             return {...state, count: null, error: action.payload}
+        case GET_FULL_FAVS:
+            return {...state, isLoading: true}
+        case GET_FULL_FAVS_SUCCESS:
+            return {...state, isLoading: false, full: action.payload}
+        case GET_FULL_FAVS_FAILURE:
+            return {...state, isLoading: false, error: action.payload}
         default:
             return state
     }

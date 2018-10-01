@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import TrailsScreen from '../screens/TrailsScreen';
 import TrailsProfile from '../screens/TrailProfile'
 import CommentPage from '../screens/CommentPage'
-import LinksScreen from '../screens/LinksScreen';
+import FavTrailsScreen from '../screens/FavTrailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 
@@ -30,12 +30,13 @@ TrailsStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const FavsStack = createStackNavigator({
+  Favs: FavTrailsScreen,
+  Profile: TrailsProfile
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+FavsStack.navigationOptions = {
+  tabBarLabel: 'Favs',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -60,6 +61,6 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   TrailsStack,
-  LinksStack,
+  FavsStack,
   SettingsStack,
 });

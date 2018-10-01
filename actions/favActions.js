@@ -17,6 +17,10 @@ export const GET_TRAIL_FAVS = 'GET_TRAIL_FAVS'
 export const GET_TRAIL_FAVS_SUCCESS = 'GET_TRAIL_FAVS_SUCCESS'
 export const GET_TRAIL_FAVS_FAIL = 'GET_TRAILS_FAVS_FAIL'
 
+export const GET_FULL_FAVS = 'GET_FULL_FAVS'
+export const GET_FULL_FAVS_SUCCESS = 'GET_FULL_FAVS_SUCCESS'
+export const GET_FULL_FAVS_FAILURE = 'GET_FULL_FAVS_FAILURE'
+
 const BASE_URL = 'http://localhost:5000/api'
 
 export const getFavsUser = (userID, token) => {
@@ -37,6 +41,20 @@ export const getFavsUser = (userID, token) => {
     }
 }
 
+export const getFavsFull = (favArr) => {
+    return async (dispatch) => {
+        try {
+            console.log('inside actions')
+            dispatch({type: GET_FULL_FAVS})
+            const ids = favArr.join(',')
+            let response = await axios.get(`https://www.hikingproject.com/data/get-trails-by-id?ids=${ids}&key=200355674-2678e760ceac9155c45dc4d568511bda`)
+            dispatch({type: GET_FULL_FAVS_SUCCESS, payload: response.data.trails})
+        } catch (e) {
+            dispatch({type: GET_FULL_FAVS_FAIL, payload: e})
+        }
+    }
+}
+
 export const getFavsTrail = (trailID, token) => {
     return async (dispatch) => {
         try {
@@ -46,7 +64,7 @@ export const getFavsTrail = (trailID, token) => {
                     authorization: `Bearer ${token}`
                 }
             })
-            console.log(response)
+            // console.log(response)
             dispatch({type: GET_TRAIL_FAVS_SUCCESS, payload: parseInt(response.data.favs)})
         } catch (e) {
             dispatch({type: GET_TRAIL_FAVS_FAIL, payload: e})

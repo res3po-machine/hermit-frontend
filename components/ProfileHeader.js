@@ -17,7 +17,10 @@ class ProfileHeader extends Component {
     async componentDidMount() {
         const preToken = await AsyncStorage.getItem('hermitToken')
         const token = JSON.parse(preToken)
-        const thisTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
+        const regTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
+        const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
+        const thisTrail = regTrail ? regTrail : favTrail
+        console.log(thisTrail)
         await this.props.getBuzz(thisTrail, this.props.trails.date)
         await this.props.getFavsTrail(thisTrail.id, token.token)
     }
@@ -40,7 +43,9 @@ class ProfileHeader extends Component {
     }
 
     render() {
-        const thisTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
+        const regTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
+        const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
+        const thisTrail = regTrail ? regTrail : favTrail
         return (
             <Card
             title={thisTrail.name}

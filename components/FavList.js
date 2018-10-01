@@ -4,32 +4,35 @@ import { List, ListItem, Rating } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getTrails, getBuzz, selectOneTrail, moreTrails, resetLoad } from '../actions/trailActions'
+import { getTrails, getBuzz, selectOneTrail, moreTrails, resetLoad,  } from '../actions/trailActions'
+import { getFavsFull } from '../actions/favActions'
 
-const mapStateToProps = ({trails}) => ({trails})
+const mapStateToProps = ({trails, fav_trails}) => ({trails, fav_trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
-    getTrails, getBuzz, selectOneTrail, moreTrails, resetLoad
+    getTrails, getBuzz, selectOneTrail, moreTrails, resetLoad, getFavsFull
 }, dispatch)
 
-class TrailList extends Component {
+class FavList extends Component {
     async componentDidMount() {
+        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
         await this.props.resetLoad()
-        this.load()
+        await this.props.getFavsFull(favs)
+        // this.load()
     }
 
     load = async () => {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                console.log(position)
-                await this.props.getTrails({ 
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                    maxTrail: this.props.trails.visualMax
-                })
+        // navigator.geolocation.getCurrentPosition(
+        //     async (position) => {
+        //         console.log(position)
+        //         await this.props.getTrails({ 
+        //             lat: position.coords.latitude,
+        //             long: position.coords.longitude,
+        //             maxTrail: this.props.trails.visualMax
+        //         })
                 // await this.props.getBuzz(this.props.trails.data, this.props.trails.date)
-            },
-            (error) => console.log(error)
-        )
+        //     },
+        //     (error) => console.log(error)
+        // )
     }
 
     select = (id) => {
@@ -79,7 +82,7 @@ class TrailList extends Component {
        return (
            
                 <FlatList
-                data={this.props.trails.data}
+                data={this.props.fav_trails.full}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({ item }) => {
                     return (
@@ -116,4 +119,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchtoProps)(TrailList)
+export default connect(mapStateToProps, mapDispatchtoProps)(FavList)
