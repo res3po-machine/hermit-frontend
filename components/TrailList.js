@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
-import { List, ListItem } from 'react-native-elements'
+import { List, ListItem, Rating } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -57,6 +57,23 @@ class TrailList extends Component {
         </View>
         );
     }
+
+    difficulty = (diffCode) => {
+        switch (diffCode) {
+            case "green": 
+                return <Text style={{color: "green"}}>Easy</Text>
+            case "greenBlue":
+                return <Text style={{color: "teal"}}>Easy/Int</Text>
+            case "blue":
+                return <Text style={{color: "orange"}}>Intermediate</Text>
+            case "blueBlack":
+                return <Text style={{color: "red"}}>Int/Hard</Text>
+            case "black":
+                return <Text style={{color: 'black'}}>Hard</Text>
+            default:
+                return <Text>Diff Unknown</Text>
+        }
+    }
     
     render() {
        return (
@@ -72,7 +89,9 @@ class TrailList extends Component {
                         subtitle={
                             <View>
                                 <Text style={styles.subtitle}>{item.location}</Text>
-                                <Text style={styles.subtitle}>Stars: {item.stars} | Difficulty: {item.difficulty} | Buzz: {item.buzz ? item.buzz[0] : 'null'}</Text>
+                                <Text style={styles.subtitle}>
+                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)}
+                                </Text>
                             </View>
                         }
                         avatar={{ uri: item.imgSmallMed }}
