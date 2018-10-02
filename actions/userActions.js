@@ -15,7 +15,7 @@ export const GET_USER_FAILURE = 'GET_USER_FAILURE'
 
 export const USER_LOGOUT = 'USER_LOGOUT'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
 
 export const userLogin = ({ email, password }) => {
     return async (dispatch) => {

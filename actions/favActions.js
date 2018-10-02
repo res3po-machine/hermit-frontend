@@ -21,7 +21,7 @@ export const GET_FULL_FAVS = 'GET_FULL_FAVS'
 export const GET_FULL_FAVS_SUCCESS = 'GET_FULL_FAVS_SUCCESS'
 export const GET_FULL_FAVS_FAILURE = 'GET_FULL_FAVS_FAILURE'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
 
 export const getFavsUser = (userID, token) => {
     return async (dispatch) => {

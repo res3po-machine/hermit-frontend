@@ -21,17 +21,21 @@ class UserProfile extends Component {
     }
     
     logout = () => {
-        console.log('logging out')
         this.props.userLogout()
         this.props.navigation.navigate('AuthLoading')
     }
 
-    render = () => {
-        console.log(this)
+    render() {
         return (
             <View>
-                <UserHeader />
-                <Button title="LOGOUT" onPress={this.logout} buttonStyle={{paddingVertical: 5}} />
+                <ScrollView>
+                    <UserHeader />
+                    <View style={{paddingVertical: 5}}>
+                        <Button title="LOGOUT" onPress={this.logout} buttonStyle={{paddingVertical: 5}} />
+
+                    </View>
+
+                </ScrollView>
             </View>
         )
     }

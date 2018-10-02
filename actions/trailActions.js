@@ -18,7 +18,7 @@ export const SWITCH_VIEW = 'SWITCH_VIEW'
 
 export const DATE_CHANGE = 'DATE_CHANGE'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
 
 export const getTrails = ({ lat, long, maxDistance, maxTrail }) => {
     return async (dispatch) => {

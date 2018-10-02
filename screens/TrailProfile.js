@@ -29,8 +29,11 @@ class TrailsProfile extends Component {
     render() {
         return (
             <View>
-                <ProfileHeader />
-                {this.props.trails.profView === 0 ? <CommentsList navigation={this.props.navigation.navigate} /> : <ImageView />}
+                <ScrollView>
+                    <ProfileHeader />
+                    {this.props.trails.profView === 0 ? <CommentsList navigation={this.props.navigation.navigate} /> : <ImageView />}
+
+                </ScrollView>
             </View>
 
         )

@@ -18,7 +18,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
 export const DELETE_COMMENT_FAIL = 'DELETE_COMMENT_FAIL'
 
-const BASE_URL = 'http://localhost:5000/api'
+const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
 
 export const commentsByTrail = (trailID, token) => {
     return async (dispatch) => {
