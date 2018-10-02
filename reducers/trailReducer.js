@@ -17,7 +17,7 @@ let initialState = {
     buzzLoading: false,
     buzz: null,
     data: [],
-    visualMax: 10,
+    visualMax: 25,
     date: new Date(Date.now()),
     error: null,
     trailSelect: null,
@@ -33,9 +33,9 @@ export default (state=initialState, action) => {
         case TRAIL_SEARCH_FAILURE:
             return {...state, isLoading: false, error: action.payload}
         case LOAD_MORE:
-            return {...state, visualMax: state.visualMax + 10}
+            return {...state, visualMax: state.visualMax + 10 > 100 ? 100 : state.visualMax + 10}
         case RESET_LOAD:
-            return {...state, visualMax: 10}
+            return {...state, visualMax: 25}
         case BUZZ_PENDING:
             return {...state, buzzLoading: true, buzz: null}
         case BUZZ_SUCCESS:

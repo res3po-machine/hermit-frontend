@@ -3,6 +3,7 @@ import {
   Image,
   Platform,
   ScrollView,
+  ListView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -45,9 +46,9 @@ class TrailsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Toolbar />
-        <ScrollView contentContainerStyle={styles.contentContainer}>
+        {/* <ScrollView contentContainerStyle={styles.contentContainer}> */}
           <TrailList navigation={this.props.navigation.navigate} />
-        </ScrollView>
+        {/* </ScrollView> */}
 
       </View>
     );
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 0,
-    position: 'relative'
+    position: 'relative',
+    // height: 1500
   },
   welcomeContainer: {
     alignItems: 'center',

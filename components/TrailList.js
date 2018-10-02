@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, ListView } from 'react-native'
 import { List, ListItem, Rating } from 'react-native-elements'
 
 import { connect } from 'react-redux'
@@ -40,6 +40,7 @@ class TrailList extends Component {
     loadMore = async () => {
         await this.props.moreTrails()
         await this.load()
+        
     }
 
     rederFooter = () => {
@@ -94,15 +95,15 @@ class TrailList extends Component {
                                 </Text>
                             </View>
                         }
-                        avatar={{ uri: item.imgSmallMed }}
+                        avatar={item.imgSmallMed.length > 0 ? { uri: item.imgSmallMed } : { uri: 'https://dummyimage.com/100x100/ffffff/525152&text=?' }}
                         avatarStyle={{height: 80, width: 50, alignSelf: "flex-end" }}
                         />
                     )
                 }}
                 ListFooterComponent={this.rederFooter}
                 refreshing={true}
-                onEndReached={this.loadMore}
-                onEndReachedThreshold={0}
+                onEndReached={async () => await this.loadMore()}
+                onEndThreshold={0.001}
                 />
             
        )
