@@ -9,7 +9,9 @@ import {
     BUZZ_SEARCH_FAILURE,
     TRAIL_SELECT,
     SWITCH_VIEW,
-    DATE_CHANGE
+    DATE_CHANGE,
+    CHANGE_MIN,
+    CHANGE_MAX
 } from '../actions/trailActions'
 
 let initialState = {
@@ -21,7 +23,9 @@ let initialState = {
     date: new Date(Date.now()),
     error: null,
     trailSelect: null,
-    profView: 0
+    profView: 0,
+    minLength: 0,
+    maxLength: 30
 }
 
 export default (state=initialState, action) => {
@@ -48,6 +52,10 @@ export default (state=initialState, action) => {
             return {...state, profView: action.payload }
         case DATE_CHANGE:
             return {...state, date: action.payload}
+        case CHANGE_MAX:
+            return {...state, maxLength: action.payload}
+        case CHANGE_MIN:
+            return {...state, minLength: action.payload}
         default:
             return state
     }

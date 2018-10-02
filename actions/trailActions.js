@@ -18,13 +18,16 @@ export const SWITCH_VIEW = 'SWITCH_VIEW'
 
 export const DATE_CHANGE = 'DATE_CHANGE'
 
+export const CHANGE_MIN = 'CHANGE_MIN'
+export const CHANGE_MAX = 'CHANGE_MAX'
+
 const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
 
-export const getTrails = ({ lat, long, maxDistance, maxTrail }) => {
+export const getTrails = ({ lat, long, maxTrail, maxLength, minLength }) => {
     return async (dispatch) => {
         try {
             dispatch({type: TRAIL_SEARCH_PENDING})
-            let response = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxResults=${maxTrail}&key=200355674-2678e760ceac9155c45dc4d568511bda${maxDistance ? '&maxDistance=' + maxDistance : ''}`)
+            let response = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${long}&maxResults=${maxTrail}&key=200355674-2678e760ceac9155c45dc4d568511bda&maxDistance=${maxLength}&minLength=${minLength}`)
             dispatch({type: TRAIL_SEARCH_SUCCESS, payload: response.data.trails})
             
         } catch (e) {
@@ -77,6 +80,18 @@ export const moreTrails = () => {
 export const resetLoad = () => {
     return (dispatch) => {
         dispatch({type: RESET_LOAD})
+    }
+}
+
+export const changeMin = (value) => {
+    return (dispatch) => {
+        dispatch({type: CHANGE_MIN, payload: value})
+    }
+}
+
+export const changeMax = (value) => {
+    return (dispatch) => {
+        dispatch({type: CHANGE_MAX, payload: value})
     }
 }
 
