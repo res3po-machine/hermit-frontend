@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, FlatList, StyleSheet, AsyncStorage } from 'react-native'
 import { Avatar, Card, Divider, ButtonGroup, Rating, Icon } from 'react-native-elements'
+import moment from 'moment'
 import FavHeart from './FavHeart'
 
 import { connect } from 'react-redux'
@@ -42,6 +43,13 @@ class ProfileHeader extends Component {
         }
     }
 
+    buzzTranslate = (buzz) => {
+        if (!buzz || buzz === 0) return <Text>Very Few People</Text>
+        if (buzz > 0 && buzz <= 10) return <Text>A Handful of People</Text>
+        if (buzz > 10 && buzz <= 30) return <Text>Regular Traffic</Text>
+        if (buzz > 30) return <Text>Very Many People</Text>
+    }
+
     render() {
         const regTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
         const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
@@ -56,8 +64,9 @@ class ProfileHeader extends Component {
                 <Text style={{alignSelf: "center", paddingBottom: 5}}>
                     {this.difficulty(thisTrail.difficulty)} <Rating style={{paddingHorizontal: 10, paddingTop: 5}} imageSize={15} readonly fractions={1} startingValue={thisTrail.stars} /> <Icon name="heart" type="font-awesome" color="red" size={15} />'s ({this.props.fav_trails.count})
                 </Text>
+                <Text style={{alignSelf: "center"}}> For {moment(this.props.trails.date).format("MMM Do YYYY")}, expect:</Text>
                 <Text style={{alignSelf: "center", paddingTop: 5, paddingBottom: 10}}>
-                    Buzz: {this.props.trails.buzz ? this.props.trails.buzz : "Not Enough Data"} 
+                    {this.buzzTranslate(this.props.trails.buzz)}
                 </Text>
 
                 <FavHeart />

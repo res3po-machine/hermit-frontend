@@ -8,9 +8,9 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/hermiticon2.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/hermitsplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
