@@ -11,7 +11,8 @@ import {
     SWITCH_VIEW,
     DATE_CHANGE,
     CHANGE_MIN,
-    CHANGE_MAX
+    CHANGE_MAX,
+    CHANGE_SORT
 } from '../actions/trailActions'
 
 let initialState = {
@@ -25,7 +26,8 @@ let initialState = {
     trailSelect: null,
     profView: 0,
     minLength: 0,
-    maxLength: 30
+    maxLength: 30,
+    sort: null
 }
 
 export default (state=initialState, action) => {
@@ -56,6 +58,8 @@ export default (state=initialState, action) => {
             return {...state, maxLength: action.payload}
         case CHANGE_MIN:
             return {...state, minLength: action.payload}
+        case CHANGE_SORT:
+            return {...state, sort: action.payload}
         default:
             return state
     }

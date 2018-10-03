@@ -12,6 +12,13 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 class TrailList extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            sortedData: []
+        }
+    }
+
     async componentDidMount() {
         await this.props.resetLoad()
         this.load()
@@ -24,12 +31,15 @@ class TrailList extends Component {
                 await this.props.getTrails({ 
                     lat: position.coords.latitude,
                     long: position.coords.longitude,
-                    maxTrail: this.props.trails.visualMax
+                    maxTrail: this.props.trails.visualMax,
+                    maxLength: this.props.trails.maxLength,
+                    minLength: this.props.trails.minLength
                 })
                 // await this.props.getBuzz(this.props.trails.data, this.props.trails.date)
             },
             (error) => console.log(error)
         )
+
     }
 
     select = (id) => {
@@ -76,11 +86,53 @@ class TrailList extends Component {
         }
     }
     
+    filters = (data) => {
+        if (this.props.trails.sort === "None") return data
+        if (this.props.trails.sort === "Difficulty") {
+            const newData = data.map(item => {
+                if (item.difficulty === 'green') {
+                    item['sort'] = 0
+                    return item
+                }
+                if (item.difficulty === 'greenBlue') {
+                    item['sort'] = 1
+                    return item
+                }
+                if (item.difficulty === 'blue') {
+                    item['sort'] = 2
+                    return item
+                }
+                if (item.difficulty === 'blueBlack') {
+                    item['sort'] = 3
+                    return item
+                }
+                if (item.difficulty === 'black') {
+                    item['sort'] = 4
+                    return item
+                }
+            })
+            return newData.sort((a,b) => {
+                return a.sort - b.sort
+            })
+        }
+        if (this.props.trails.sort === 'Rating') {
+            return data.sort((a,b) => {
+                return b.stars - a.stars
+            })
+        }
+        if (this.props.trails.sort === 'Length') {
+            return data.sort((a,b) => {
+                return a.length - b.length
+            })
+        }
+    }
+
     render() {
+        let data = this.filters(this.props.trails.data)
        return (
            
                 <FlatList
-                data={this.props.trails.data}
+                data={data ? data : this.props.trails.data}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({ item }) => {
                     return (

@@ -44,7 +44,7 @@ class ProfileHeader extends Component {
     }
 
     buzzTranslate = (buzz) => {
-        if (!buzz || buzz === 0) return <Text>Very Few People</Text>
+        if (!buzz || buzz === null || buzz === 0) return <Text>Very Few People</Text>
         if (buzz > 0 && buzz <= 10) return <Text>A Handful of People</Text>
         if (buzz > 10 && buzz <= 30) return <Text>Regular Traffic</Text>
         if (buzz > 30) return <Text>Very Many People</Text>

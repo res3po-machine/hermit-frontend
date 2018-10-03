@@ -18,6 +18,8 @@ export const SWITCH_VIEW = 'SWITCH_VIEW'
 
 export const DATE_CHANGE = 'DATE_CHANGE'
 
+export const CHANGE_SORT = 'CHANGE_SORT'
+
 export const CHANGE_MIN = 'CHANGE_MIN'
 export const CHANGE_MAX = 'CHANGE_MAX'
 
@@ -92,6 +94,12 @@ export const changeMin = (value) => {
 export const changeMax = (value) => {
     return (dispatch) => {
         dispatch({type: CHANGE_MAX, payload: value})
+    }
+}
+
+export const changeSort = (category) => {
+    return (dispatch) => {
+        dispatch({type: CHANGE_SORT, payload: category})
     }
 }
 

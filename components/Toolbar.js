@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import { Icon, Slider } from 'react-native-elements'
+import { Icon, Slider, CheckBox } from 'react-native-elements'
 import { Calendar } from 'react-native-calendars'
 import moment from 'moment'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { dateChange, getTrails, resetLoad, changeMax, changeMin } from '../actions/trailActions'
+import { dateChange, getTrails, resetLoad, changeMax, changeMin, changeSort } from '../actions/trailActions'
 
 const mapStateToProps = ({trails}) => ({trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
-    dateChange, getTrails, changeMax, changeMin, resetLoad
+    dateChange, getTrails, changeMax, changeMin, resetLoad, changeSort
 }, dispatch)
 
 class Toolbar extends Component {
@@ -80,6 +80,17 @@ class Toolbar extends Component {
         )
     }
 
+    sortBox = () => {
+        return (
+            <View style={{paddingVertical: 10, justifyContent: 'center'}}>
+                <CheckBox onPress={() => this.props.changeSort('Difficulty')} center title="Difficulty" checked={this.props.trails.sort === "Difficulty" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox onPress={() => this.props.changeSort('Rating')} center title="Rating" checked={this.props.trails.sort === "Rating" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox onPress={() => this.props.changeSort('Length')} center title="Length" checked={this.props.trails.sort === "Length" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox onPress={() => this.props.changeSort('None')} center title="None" checked={this.props.trails.sort === "None" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+            </View>
+        )
+    }
+    
     render() {
         return (
             <View>
@@ -113,6 +124,7 @@ class Toolbar extends Component {
                     </Text>
                 </View>
                 {this.state.showFilter ? this.slider() : ''}
+                {this.state.showSort ? this.sortBox() : ''}
                 {this.state.showCal ? <Calendar onDayPress={(day) => this.dateChange(day)} style={styles.cal} minDate={new Date(Date.now())} /> : ''}
             </View>
         );
