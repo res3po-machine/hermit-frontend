@@ -30,7 +30,7 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 
 class TrailsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Local Trails',
+    title: 'Local Trails'
   };
 
   componentDidMount = async () => {

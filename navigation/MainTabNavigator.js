@@ -1,8 +1,12 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 
-import TabBarIcon from '../components/TabBarIcon';
+// import TabBarIcon from '../components/TabBarIcon';
+import Icon from 'react-native-vector-icons/Foundation'
+import Colors from '../constants/Colors';
+
 import TrailsScreen from '../screens/TrailsScreen';
 import TrailsProfile from '../screens/TrailProfile'
 import CommentPage from '../screens/CommentPage'
@@ -18,16 +22,15 @@ const TrailsStack = createStackNavigator({
 
 TrailsStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
+  tabBarIcon: ({ focused, tintColor }) => (
+    <Icon
+        name="trees"
+        size={26}
+        style={{ marginBottom: -3 }}
+        color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
   ),
+  tabBarColor: '#448A34'
 };
 
 const FavsStack = createStackNavigator({
@@ -38,11 +41,14 @@ const FavsStack = createStackNavigator({
 FavsStack.navigationOptions = {
   tabBarLabel: 'Favs',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
-    />
+    <Icon
+        name="heart"
+        size={26}
+        style={{ marginBottom: -3 }}
+        color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
   ),
+  tabBarColor: '#8A3434'
 };
 
 const UserStack = createStackNavigator({
@@ -52,15 +58,25 @@ const UserStack = createStackNavigator({
 UserStack.navigationOptions = {
   tabBarLabel: 'User',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
+    <Icon
+        name="torso"
+        size={26}
+        style={{ marginBottom: -3 }}
+        color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
   ),
+  tabBarColor: '#344D8A'
 };
 
-export default createBottomTabNavigator({
+export default createMaterialBottomTabNavigator({
   TrailsStack,
   FavsStack,
   UserStack,
+},
+{
+  shifting: true,
+  initialRouteName: 'TrailsStack',
+  activeColor: '#f0edf6',
+  inactiveColor: '#3e2465',
+  // barStyle: { backgroundColor: 'grey' },
 });
