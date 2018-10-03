@@ -46,18 +46,50 @@ class LoginForm extends Component {
 
     render = () => {
         return (
-            <View>
+            <View style={{paddingBottom: 20}}>
 
-                <Card style={styles.formCard}>
+                <Card 
+                containerStyle={styles.formCard}>
  
-                    <FormLabel for="email">Email:</FormLabel>
+                    {/* <FormLabel for="email">Email:</FormLabel> */}
                     {/* Set value to state: this is for convenience */}
-                    <FormInput onChangeText={(text) => this.onChange({name: "email", value: text})}  value={this.state.email} autoCapitalize="none" textContentType="emailAddress" name="email" />
+                    <View style={{paddingVertical: 10}}>
+                        <FormInput 
+                        placeholder="Email" 
+                        placeholderTextColor="#fff"
+                        inputStyle={{color: "#fff"}}
+                        onChangeText={(text) => this.onChange({name: "email", value: text})} 
+                        value={this.state.email} 
+                        autoCapitalize="none" 
+                        textContentType="emailAddress" 
+                        name="email" />
+                    </View>
 
-                    <FormLabel for="password">Password:</FormLabel>
-                    <FormInput onChangeText={(text) => this.onChange({name: "password", value: text})} value={this.state.password} autoCapitalize="none" secureTextEntry={true} name="password" />
+                    <View style={{paddingVertical: 10}}>
+                        <FormInput 
+                        placeholder="Password" 
+                        placeholderTextColor="#fff"
+                        inputStyle={{color: "#fff"}}
+                        onChangeText={(text) => this.onChange({name: "password", value: text})} 
+                        value={this.state.password} 
+                        autoCapitalize="none" 
+                        secureTextEntry={true} 
+                        name="password" />
+                    </View>
+                    {/* <FormLabel for="password">Password:</FormLabel> */}
 
-                    <Button raised onPress={this.onSubmit} title="Login" />
+                    <Button 
+                    raised 
+                    onPress={this.onSubmit} 
+                    title="LOGIN"
+                    buttonStyle={{
+                        backgroundColor: "rgba(255, 171,51, 1)",
+                        width: 300,
+                        height: 45,
+                        borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 100
+                      }} />
 
                 </Card>
 
@@ -69,9 +101,13 @@ class LoginForm extends Component {
 
 const styles = StyleSheet.create({
     formCard: {
-      flex: 1,
-      backgroundColor: '#fff',
-      margin: 100
+        justifyContent: 'space-between',
+        // alignContent: 'space-around',
+        // alignContent: 'center',
+      backgroundColor: '#403f41',
+      borderColor: 'transparent',
+      width: 350,
+      height: 200
 }})
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

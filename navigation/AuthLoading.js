@@ -6,6 +6,7 @@ import {
     StyleSheet,
     View
 } from 'react-native'
+import { DoubleCircleLoader } from 'react-native-indicator'
 
 export default class AuthLoadingScreen extends React.Component {
     constructor(props) {
@@ -21,8 +22,9 @@ export default class AuthLoadingScreen extends React.Component {
     render () {
 
         return (
-            <View>
-                <ActivityIndicator />
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#403f41'}}>
+                {/* <Spinner isVisible={true} color="rgba(255, 171,51, 1)" type="Bounce"/> */}
+                <DoubleCircleLoader size={80} color="#FFAB33"/>
                 <StatusBar barStyle="default" />
             </View>
         )

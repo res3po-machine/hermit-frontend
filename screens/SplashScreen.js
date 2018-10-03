@@ -27,12 +27,14 @@ export default class SplashScreen extends Component {
                 <Image
                     source={logo}
                     style={{height: 300, width: 300}} />
+                
                 <Button
                 containerViewStyle={{
                     paddingVertical: 10,
                     alignSelf: 'center'
                 }}
-                title={<Text style={{fontWeight: 'bold'}}>LOG IN</Text>}
+                title="LOG IN"
+                titleStyle={{fontWeight: 'bold'}}
                 buttonStyle={{
                     backgroundColor: "rgba(255, 171,51, 1)",
                     width: 300,
@@ -44,8 +46,8 @@ export default class SplashScreen extends Component {
                 onPress={this.toLogin}
                 />
                 <Button
-                
-                title='SIGN UP'
+                title="SIGN UP"
+                titleStyle={{fontWeight: 'bold'}}
                 buttonStyle={{
                     backgroundColor: "rgba(255, 171,51, 1)",
                     width: 300,
