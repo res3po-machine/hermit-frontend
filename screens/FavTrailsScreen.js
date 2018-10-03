@@ -15,7 +15,7 @@ import { SearchBar, Icon } from 'react-native-elements'
 import { MonoText } from '../components/StyledText';
 import LoginForm from '../components/LoginForm';
 import FavList from '../components/FavList'
-import Toolbar from '../components/Toolbar'
+import FavToolbar from '../components/FavToolbar'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -45,7 +45,7 @@ class FavTrailsScreen extends React.Component {
     console.log(this.props)
     return (
       <View style={{flex: 1, backgroundColor: "white"}}>
-        <Toolbar />
+        <FavToolbar />
         <ScrollView>
           <FavList navigation={this.props.navigation.navigate} />
         </ScrollView>

@@ -14,9 +14,9 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 
 class FavList extends Component {
     async componentDidMount() {
-        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
+       
         await this.props.resetLoad()
-        await this.props.getFavsFull(favs)
+        
         // this.load()
     }
 
@@ -79,10 +79,11 @@ class FavList extends Component {
     }
     
     render() {
+        let data = this.props.trails.sort.function(this.props.fav_trails.full)
        return (
            
                 <FlatList
-                data={this.props.fav_trails.full}
+                data={data}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({ item }) => {
                     return (

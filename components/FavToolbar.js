@@ -13,12 +13,11 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
     dateChange, getTrails, changeMax, changeMin, resetLoad, changeSort
 }, dispatch)
 
-class Toolbar extends Component {
+class FavToolbar extends Component {
     constructor(props) {
         super(props)
         this.state={
             showCal: false,
-            showFilter: false,
             showSort: false
         }
     }
@@ -41,44 +40,44 @@ class Toolbar extends Component {
         // )
     }
 
-    reLoad = async () => {
-        await this.props.resetLoad()
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                console.log(position)
-                await this.props.getTrails({ 
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                    maxTrail: this.props.trails.visualMax,
-                    maxLength: this.props.trails.maxLength,
-                    minLength: this.props.trails.minLength
-                })
-                // await this.props.getBuzz(this.props.trails.data, this.props.trails.date)
-            },
-            (error) => console.log(error)
-        )
-    }
+    // reLoad = async () => {
+    //     await this.props.resetLoad()
+    //     navigator.geolocation.getCurrentPosition(
+    //         async (position) => {
+    //             console.log(position)
+    //             await this.props.getTrails({ 
+    //                 lat: position.coords.latitude,
+    //                 long: position.coords.longitude,
+    //                 maxTrail: this.props.trails.visualMax,
+    //                 maxLength: this.props.trails.maxLength,
+    //                 minLength: this.props.trails.minLength
+    //             })
+    //             // await this.props.getBuzz(this.props.trails.data, this.props.trails.date)
+    //         },
+    //         (error) => console.log(error)
+    //     )
+    // }
 
-    handleMax = async (value) => {
-        await this.props.changeMax(value)
-        await this.reLoad()
-    }
+    // handleMax = async (value) => {
+    //     await this.props.changeMax(value)
+    //     await this.reLoad()
+    // }
 
-    handleMin = async (value) => {
-        await this.props.changeMin(value)
-        await this.reLoad()
-    }
+    // handleMin = async (value) => {
+    //     await this.props.changeMin(value)
+    //     await this.reLoad()
+    // }
 
-    slider = () => {
-        return (
-            <View style={{paddingVertical: 10, justifyContent: 'center'}}>
-                <Text style={{alignSelf: 'center'}}>Max Trail Length: {this.props.trails.maxLength} miles</Text>
-                <Slider onSlidingComplete={this.handleMax} value={this.props.trails.maxLength} step={1} minimumValue={1} maximumValue={200} thumbTintColor="grey"/>
-                <Text style={{alignSelf: 'center'}}>Min Trail Length: {this.props.trails.minLength} miles</Text>
-                <Slider onSlidingComplete={this.handleMin} value={this.props.trails.minLength} step={1} minimumValue={0} maximumValue={200} thumbTintColor="grey" />
-            </View>
-        )
-    }
+    // slider = () => {
+    //     return (
+    //         <View style={{paddingVertical: 10, justifyContent: 'center'}}>
+    //             <Text style={{alignSelf: 'center'}}>Max Trail Length: {this.props.trails.maxLength} miles</Text>
+    //             <Slider onSlidingComplete={this.handleMax} value={this.props.trails.maxLength} step={1} minimumValue={1} maximumValue={200} thumbTintColor="grey"/>
+    //             <Text style={{alignSelf: 'center'}}>Min Trail Length: {this.props.trails.minLength} miles</Text>
+    //             <Slider onSlidingComplete={this.handleMin} value={this.props.trails.minLength} step={1} minimumValue={0} maximumValue={200} thumbTintColor="grey" />
+    //         </View>
+    //     )
+    // }
 
     sortBox = () => {
         return (
@@ -106,14 +105,6 @@ class Toolbar extends Component {
                     <Icon
                     iconStyle={{paddingVertical: 5, paddingHorizontal: 5, alignSelf: 'flex-start'}}
                     color="white"
-                    name='filter'
-                    type="font-awesome"
-                    onPress={() => this.setState({...this.state, showFilter: !this.state.showFilter})}
-                     />
-
-                    <Icon
-                    iconStyle={{paddingVertical: 5, paddingHorizontal: 5, alignSelf: 'flex-start'}}
-                    color="white"
                     name='sort'
                     type="font-awesome"
                     onPress={() => this.setState({...this.state, showSort: !this.state.showSort})}
@@ -123,7 +114,6 @@ class Toolbar extends Component {
                         Prediction Date: {moment(this.props.trails.date).format("MMM Do YYYY")}
                     </Text>
                 </View>
-                {this.state.showFilter ? this.slider() : ''}
                 {this.state.showSort ? this.sortBox() : ''}
                 {this.state.showCal ? <Calendar onDayPress={(day) => this.dateChange(day)} style={styles.cal} minDate={new Date(Date.now())} /> : ''}
             </View>
@@ -140,7 +130,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         height: 35,
-        backgroundColor: '#448A34',
+        backgroundColor: '#8A3434',
         elevation: 4,
     },
     cal: {
@@ -148,4 +138,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(Toolbar)
+export default connect(mapStateToProps, mapDispatchtoProps)(FavToolbar)
