@@ -9,7 +9,7 @@ export default class SplashScreen extends Component {
         headerMode: 'screen',
         headerTintColor: '#000000',
         headerStyle: {
-            backgroundColor: '#ffffff',
+            backgroundColor: 'rgba(255, 171,51, 1)',
           }
     }
     
@@ -32,14 +32,14 @@ export default class SplashScreen extends Component {
                     paddingVertical: 10,
                     alignSelf: 'center'
                 }}
-                title='LOG IN'
+                title={<Text style={{fontWeight: 'bold'}}>LOG IN</Text>}
                 buttonStyle={{
                     backgroundColor: "rgba(255, 171,51, 1)",
                     width: 300,
                     height: 45,
                     borderColor: "transparent",
                     borderWidth: 0,
-                    borderRadius: 100
+                    borderRadius: 100,
                   }}
                 onPress={this.toLogin}
                 />

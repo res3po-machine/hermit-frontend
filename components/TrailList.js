@@ -85,54 +85,13 @@ class TrailList extends Component {
                 return <Text>Diff Unknown</Text>
         }
     }
-    
-    filters = (data) => {
-        if (this.props.trails.sort === "None") return data
-        if (this.props.trails.sort === "Difficulty") {
-            const newData = data.map(item => {
-                if (item.difficulty === 'green') {
-                    item['sort'] = 0
-                    return item
-                }
-                if (item.difficulty === 'greenBlue') {
-                    item['sort'] = 1
-                    return item
-                }
-                if (item.difficulty === 'blue') {
-                    item['sort'] = 2
-                    return item
-                }
-                if (item.difficulty === 'blueBlack') {
-                    item['sort'] = 3
-                    return item
-                }
-                if (item.difficulty === 'black') {
-                    item['sort'] = 4
-                    return item
-                }
-            })
-            return newData.sort((a,b) => {
-                return a.sort - b.sort
-            })
-        }
-        if (this.props.trails.sort === 'Rating') {
-            return data.sort((a,b) => {
-                return b.stars - a.stars
-            })
-        }
-        if (this.props.trails.sort === 'Length') {
-            return data.sort((a,b) => {
-                return a.length - b.length
-            })
-        }
-    }
 
     render() {
-        let data = this.filters(this.props.trails.data)
+        let data = this.props.trails.sort.function(this.props.trails.data)
        return (
            
                 <FlatList
-                data={data ? data : this.props.trails.data}
+                data={data}
                 keyExtractor={item => `${item.id}`}
                 renderItem={({ item }) => {
                     return (
@@ -143,7 +102,7 @@ class TrailList extends Component {
                             <View>
                                 <Text style={styles.subtitle}>{item.location}</Text>
                                 <Text style={styles.subtitle}>
-                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)}
+                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)} {`  ${item.length} miles`}
                                 </Text>
                             </View>
                         }

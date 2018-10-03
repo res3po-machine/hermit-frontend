@@ -58,7 +58,11 @@ export const getBuzz = (trail, date) => {
                 trail,
                 date
             })
-            dispatch({type: BUZZ_SUCCESS, payload: response.data.data})
+            if (typeof response.data.data === 'object') {
+                dispatch({type: BUZZ_SUCCESS, payload: response.data.data[0]})
+            } else {
+                dispatch({type: BUZZ_SUCCESS, payload: response.data.data})
+            }
         } catch (e) {
             dispatch({type: BUZZ_SEARCH_FAILURE, payload: e})
         }
@@ -99,7 +103,23 @@ export const changeMax = (value) => {
 
 export const changeSort = (category) => {
     return (dispatch) => {
-        dispatch({type: CHANGE_SORT, payload: category})
+        switch (category) {
+            case "None":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortNone} })
+                return
+            case "Difficulty":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortDiff} })
+                return
+            case "Rating":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortRating} })
+                return
+            case "Length":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortLength} })
+                return
+            default:
+                dispatch({type: CHANGE_SORT, payload: {type: "None", function: sortNone} })
+                return
+        }
     }
 }
 
@@ -114,4 +134,49 @@ const getSunday = (d) => {
     let mon = getMonday(d)
     let diff = mon.getDate() + 6
     return new Date(mon.setDate(diff))
+}
+
+const sortNone = (data) => {
+    return data
+}
+const sortDiff = (data) => {
+    const newData = data.map(item => {
+        if (item.difficulty === 'green') {
+            item['sort'] = 0
+            return item
+        }
+        if (item.difficulty === 'greenBlue') {
+            item['sort'] = 1
+            return item
+        }
+        if (item.difficulty === 'blue') {
+            item['sort'] = 2
+            return item
+        }
+        if (item.difficulty === 'blueBlack') {
+            item['sort'] = 3
+            return item
+        }
+        if (item.difficulty === 'black') {
+            item['sort'] = 4
+            return item
+        }
+    })
+    return newData.sort((a,b) => {
+        return a.sort - b.sort
+    })
+}
+
+const sortRating = (data) => {
+    let newData = [ ...data ]
+    return newData.sort((a,b) => {
+        return b.stars - a.stars
+    })
+}
+
+const sortLength = (data) => {
+    let newData = [ ...data ]
+    return newData.sort((a,b) => {
+        return a.length - b.length
+    })
 }

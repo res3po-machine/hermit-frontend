@@ -83,10 +83,10 @@ class Toolbar extends Component {
     sortBox = () => {
         return (
             <View style={{paddingVertical: 10, justifyContent: 'center'}}>
-                <CheckBox onPress={() => this.props.changeSort('Difficulty')} center title="Difficulty" checked={this.props.trails.sort === "Difficulty" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox onPress={() => this.props.changeSort('Rating')} center title="Rating" checked={this.props.trails.sort === "Rating" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox onPress={() => this.props.changeSort('Length')} center title="Length" checked={this.props.trails.sort === "Length" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox onPress={() => this.props.changeSort('None')} center title="None" checked={this.props.trails.sort === "None" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox title="None" onPress={() => this.props.changeSort('None')} center title="None" checked={this.props.trails.sort.type === "None" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox title="Difficulty" onPress={() => this.props.changeSort('Difficulty')} center title="Difficulty" checked={this.props.trails.sort.type === "Difficulty" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox title="Rating" onPress={() => this.props.changeSort('Rating')} center title="Rating" checked={this.props.trails.sort.type === "Rating" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+                <CheckBox title="Length" onPress={() => this.props.changeSort('Length')} center title="Length" checked={this.props.trails.sort.type === "Length" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
             </View>
         )
     }

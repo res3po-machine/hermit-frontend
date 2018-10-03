@@ -27,7 +27,7 @@ let initialState = {
     profView: 0,
     minLength: 0,
     maxLength: 30,
-    sort: null
+    sort: {type: "None", function: (data) => data}
 }
 
 export default (state=initialState, action) => {
