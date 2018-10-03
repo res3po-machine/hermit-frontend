@@ -32,11 +32,13 @@ class LoginForm extends Component {
         e.preventDefault()
         try {
             await this.props.userLogin(this.state)
-            this.setState({
-                email: '',
-                password: ''
-            })
-            this.props.navigation('AuthLoading')
+            if (!this.props.users.showLoginError) {
+                this.setState({
+                    email: '',
+                    password: ''
+                })
+                this.props.navigation('AuthLoading')
+            }
 
         } catch (e) {
             console.log(e)
@@ -55,6 +57,9 @@ class LoginForm extends Component {
                     {/* Set value to state: this is for convenience */}
                     <View style={{paddingVertical: 10}}>
                         <FormInput 
+                        shake={this.props.users.showLoginError}
+                        errorStyle={{color: 'red'}}
+                        error="ERROR"
                         placeholder="Email" 
                         placeholderTextColor="#fff"
                         inputStyle={{color: "#fff"}}
@@ -67,6 +72,7 @@ class LoginForm extends Component {
 
                     <View style={{paddingVertical: 10}}>
                         <FormInput 
+                        shake={this.props.users.showLoginError}
                         placeholder="Password" 
                         placeholderTextColor="#fff"
                         inputStyle={{color: "#fff"}}
@@ -90,6 +96,8 @@ class LoginForm extends Component {
                         borderWidth: 0,
                         borderRadius: 100
                       }} />
+
+                      {this.props.users.showLoginError ? <Text style={{color: "#fff", alignSelf: 'center'}}>* Either your email or password is incorrect</Text> : ''}
 
                 </Card>
 

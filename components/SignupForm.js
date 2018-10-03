@@ -36,17 +36,18 @@ class SignupForm extends Component {
         e.preventDefault()
         try {
             await this.props.userSignup(this.state)
-            this.setState({
-                firstName: '',
-                lastName: '',
-                email: '',
-                username: '',
-                password: '',
-                password2: '',
-                proff: '',
-                error: ''
-            })
-            this.props.navigation('AuthLoading')
+            if (!this.props.users.showSignupError) {
+                this.setState({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    username: '',
+                    password: '',
+                    proff: '',
+                    error: ''
+                })
+                this.props.navigation('AuthLoading')
+            }
 
         } catch (e) {
             console.log(e)
@@ -123,6 +124,8 @@ class SignupForm extends Component {
 
                         {/* <FormLabel for="password2">Re-Enter Password:</FormLabel>
                         <FormInput onChangeText={(text) => this.onChange({name: "password2", value: text})} value={this.state.password2} autoCapitalize="none" textContentType="password" name="password2" /> */}
+
+                        {this.props.users.showSignupError ? <Text style={{color: '#fff', alignSelf: 'center'}}>* Please Make Sure All Forms Are Filled</Text> : ''}
 
                         <Button 
                         raised 
