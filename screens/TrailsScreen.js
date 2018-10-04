@@ -17,6 +17,7 @@ import { MonoText } from '../components/StyledText';
 import LoginForm from '../components/LoginForm';
 import TrailList from '../components/TrailList'
 import Toolbar from '../components/Toolbar'
+import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,7 +31,12 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 
 class TrailsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Local Trails'
+    title: 'Local Trails',
+    headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: {
+            backgroundColor: '#448A34',
+          },
   };
 
   componentDidMount = async () => {

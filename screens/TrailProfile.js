@@ -22,18 +22,23 @@ class TrailsProfile extends Component {
     }
 
     static navigationOptions = {
-        title: 'Details'
+        title: 'Details',
+        headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: {
+            backgroundColor: '#448A34',
+        },
     }
 
 
     render() {
         return (
             <View>
-                <ScrollView>
+                // <ScrollView style={{backgroundColor: '#fff'}}>
                     <ProfileHeader />
                     {this.props.trails.profView === 0 ? <CommentsList navigation={this.props.navigation.navigate} /> : <ImageView />}
 
-                </ScrollView>
+                // </ScrollView>
             </View>
 
         )

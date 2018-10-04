@@ -18,6 +18,11 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 class UserProfile extends Component {
     static navigationOptions = {
         title: "User Profile",
+        headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: {
+            backgroundColor: '#34408A',
+        },
     }
     
     logout = () => {

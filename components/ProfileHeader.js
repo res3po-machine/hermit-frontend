@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import { View, Text, FlatList, StyleSheet, AsyncStorage } from 'react-native'
-import { Avatar, Card, Divider, ButtonGroup, Rating, Icon } from 'react-native-elements'
+import { View, Text, FlatList, StyleSheet, AsyncStorage, ScrollView } from 'react-native'
+import { Avatar, Card, Divider, ButtonGroup, Rating, Icon, ListItem, Tile } from 'react-native-elements'
 import moment from 'moment'
 import FavHeart from './FavHeart'
+import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -29,15 +30,15 @@ class ProfileHeader extends Component {
     difficulty = (diffCode) => {
         switch (diffCode) {
             case "green": 
-                return <Text style={{color: "green"}}>Easy</Text>
+                return <Text style={{color: "green", fontWeight: 'bold'}}>Easy</Text>
             case "greenBlue":
-                return <Text style={{color: "teal"}}>Easy/Int</Text>
+                return <Text style={{color: "teal", fontWeight: 'bold'}}>Easy/Int</Text>
             case "blue":
-                return <Text style={{color: "orange"}}>Intermediate</Text>
+                return <Text style={{color: "orange", fontWeight: 'bold'}}>Intermediate</Text>
             case "blueBlack":
-                return <Text style={{color: "red"}}>Int/Hard</Text>
+                return <Text style={{color: "red", fontWeight: 'bold'}}>Int/Hard</Text>
             case "black":
-                return <Text style={{color: 'black'}}>Hard</Text>
+                return <Text style={{color: 'black', fontWeight: 'bold'}}>Hard</Text>
             default:
                 return <Text>Diff Unknown</Text>
         }
@@ -56,28 +57,89 @@ class ProfileHeader extends Component {
         const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
         const thisTrail = regTrail ? regTrail : favTrail
         return (
-            <Card
-            title={thisTrail.name}
-            image={{uri: thisTrail.imgMedium}}>
-                <Text style={{marginBottom: 10}}>
-                    {thisTrail.summary}
-                </Text>
-                <Text style={{alignSelf: "center", paddingBottom: 5}}>
-                    {this.difficulty(thisTrail.difficulty)} <Rating style={{paddingHorizontal: 10, paddingTop: 5}} imageSize={15} readonly fractions={1} startingValue={thisTrail.stars} /> <Icon name="heart" type="font-awesome" color="red" size={15} />'s ({this.props.fav_trails.count})
-                </Text>
-                <Text style={{alignSelf: "center"}}> For {moment(this.props.trails.date).format("MMM Do YYYY")}, expect:</Text>
-                <Text style={{alignSelf: "center", paddingTop: 5, paddingBottom: 10}}>
-                    {this.buzzTranslate(this.props.trails.buzz)}
-                </Text>
-
-                <FavHeart />
-                <Divider style={{paddingVertical: 10, backgroundColor: 'white'}} />
-                <ButtonGroup
-                    buttons={['COMMENTS', 'PICS']}
-                    containerStyle={{height: 40}}
-                    selectedIndex={this.props.trails.profView}
-                    onPress={() => this.props.switchView(this.props.trails.profView)} />
-            </Card>
+            <ScrollView style={{backgroundColor: '#fff'}}>
+                <Tile
+                    imageSrc={{uri: thisTrail.imgMedium}}
+                    featured
+                    title={thisTrail.name}
+                    />
+                <Card
+                containerStyle={{marginVertical: 0, marginHorizontal: 0}}
+                // image={{uri: thisTrail.imgMedium}}
+                // imageStyle={{borderRadius: 50}}
+                >
+                <ListItem
+                    hideChevron
+                    leftIcon={
+                        <Icon
+                        name='ellipsis-h'
+                        type='font-awesome'
+                        color='grey' />
+                    }
+                    subtitle={thisTrail.summary}
+                    subtitleStyle={{flexWrap: 'wrap', paddingLeft: 10}}
+                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    subtitleNumberOfLines={10}
+                    />
+                <ListItem
+                    hideChevron
+                    leftIcon={
+                        <Icon
+                        name='balance-scale'
+                        type='font-awesome'
+                        color='grey' />
+                    }
+                    subtitle={this.difficulty(thisTrail.difficulty)}
+                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    />
+                <ListItem
+                    hideChevron
+                    leftIcon={
+                        <Icon
+                        name='star'
+                        type='font-awesome'
+                        color='grey' />
+                    }
+                    subtitle={<Rating 
+                        imageSize={20} 
+                        readonly 
+                        fractions={1} 
+                        startingValue={thisTrail.stars} />}
+                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    />
+                <ListItem
+                    hideChevron
+                    leftIcon={
+                        <FavHeart />
+                    }
+                    subtitle={
+                        <Text>
+                            <Icon name="heart" type="font-awesome" color="red" size={15} />'s ({this.props.fav_trails.isLoading ? <DoubleCircleLoader size={20} color="#FFAB33"/> : this.props.fav_trails.count})
+                        </Text>
+                    }
+                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    />
+                <ListItem
+                    hideChevron
+                    containerStyle={{borderBottomWidth: 0}}
+                    title={
+                        <Text style={{fontSize: 16, alignSelf: 'center'}}>
+                            For {moment(this.props.trails.date).format("MMM Do YYYY")}, expect:
+                        </Text>
+                    }
+                    
+                    subtitle={this.props.trails.buzzLoading ? <DoubleCircleLoader size={20} color="#FFAB33"/> : this.buzzTranslate(this.props.trails.buzz)}
+                    subtitleContainerStyle={{alignSelf: 'center', paddingTop: 5}}
+                    />
+                    
+                    {/* Re-Add this feature when pictures are incorporated */}
+                    {/* <ButtonGroup
+                        buttons={['COMMENTS', 'PICS']}
+                        containerStyle={{height: 40}}
+                        selectedIndex={this.props.trails.profView}
+                        onPress={() => this.props.switchView(this.props.trails.profView)} /> */}
+                </Card>
+            </ScrollView>
         )
     }
 }

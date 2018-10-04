@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, StyleSheet, AsyncStorage } from 'react-native'
 import { Avatar, Card, Divider, ListItem, FormLabel, FormInput, Button } from 'react-native-elements'
+import moment from 'moment'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -46,9 +47,21 @@ class CommentsList extends Component {
                 <Card containerStyle={{padding: 0}} >
                     <FormLabel for="body">Post a Comment:</FormLabel>
                     <FormInput multiline={true} style={{paddingBottom: 10}} onChangeText={(text) => this.setState({body: text})} value={this.state.body} name="body"/>
-                    <Button onPress={() => this.onSubmit()} style={{paddingVertical: 10, alignSelf: 'flex-end'}} title="SEND" buttonStyle={{width: 100, }} />
+                    <Button 
+                        loading={this.props.comments.postLoading}
+                        onPress={() => this.onSubmit()} 
+                        style={{paddingVertical: 10, alignSelf: 'flex-end'}} 
+                        title="SEND" 
+                        buttonStyle={{
+                            backgroundColor: "rgba(255, 171,51, 1)",
+                            width: 100,
+                            height: 45,
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 100,
+                          }} />
                 </Card>
-                <View style={{flexDirection: 'column-reverse'}}>
+                <View style={{flexDirection: 'column-reverse', paddingBottom: 10}}>
                     <Card containerStyle={{padding: 0}} >
                     {
                         this.props.comments.comments.map((comment, i) => {
@@ -59,6 +72,11 @@ class CommentsList extends Component {
                             title={
                                 <View style={{paddingLeft: 5}}>
                                     <Text>{comment.body}</Text>
+                                </View>
+                            }
+                            subtitle={
+                                <View style={{alignSelf: 'flex-end'}}>
+                                    <Text style={{fontSize: 10, color: 'grey'}}>{comment.created_at === comment.updated_at ? `Created ${moment(comment.created_at).startOf(Date.now()).fromNow()}` : `Updated ${moment(comment.updated_at).startOf('day').fromNow()}`}</Text>
                                 </View>
                             }
                             avatar={

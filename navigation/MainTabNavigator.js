@@ -35,7 +35,8 @@ TrailsStack.navigationOptions = {
 
 const FavsStack = createStackNavigator({
   Favs: FavTrailsScreen,
-  Profile: TrailsProfile
+  Profile: TrailsProfile,
+  Comment: CommentPage
 });
 
 FavsStack.navigationOptions = {

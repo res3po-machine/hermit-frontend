@@ -52,7 +52,7 @@ class LoginForm extends Component {
 
                 <Card 
                 containerStyle={styles.formCard}>
- 
+                    <Text style={{fontSize: 25, fontWeight: 'bold', alignSelf: 'center', paddingBottom: 10, color: '#fff'}}>Login</Text>
                     {/* <FormLabel for="email">Email:</FormLabel> */}
                     {/* Set value to state: this is for convenience */}
                     <View style={{paddingVertical: 10}}>
@@ -86,6 +86,7 @@ class LoginForm extends Component {
 
                     <Button 
                     raised 
+                    loading={this.props.users.isLoading}
                     onPress={this.onSubmit} 
                     title="LOGIN"
                     buttonStyle={{

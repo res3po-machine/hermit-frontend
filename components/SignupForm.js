@@ -129,6 +129,7 @@ class SignupForm extends Component {
 
                         <Button 
                         raised 
+                        loading={this.props.users.isLoading}
                         onPress={this.onSubmit} 
                         title="SIGN UP"
                         buttonStyle={{

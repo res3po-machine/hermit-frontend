@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, ListView } from 'react-native'
 import { List, ListItem, Rating } from 'react-native-elements'
+import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -48,8 +49,11 @@ class TrailList extends Component {
     }
 
     loadMore = async () => {
-        await this.props.moreTrails()
-        await this.load()
+        setTimeout(async () => {
+            await this.props.moreTrails()
+            await this.load()
+
+        }, 1000)
         
     }
 
@@ -61,10 +65,11 @@ class TrailList extends Component {
             style={{
             paddingVertical: 20,
             borderTopWidth: 1,
-            borderColor: "#CED0CE"
+            borderColor: "#CED0CE",
+            alignItems: "center"
             }}
         >
-            <ActivityIndicator animating size="large" />
+           <DoubleCircleLoader size={80} color="#FFAB33"/>
         </View>
         );
     }
@@ -106,8 +111,11 @@ class TrailList extends Component {
                                 </Text>
                             </View>
                         }
+                        roundAvatar
+                        // titleStyle={{paddingLeft: 10}}
                         avatar={item.imgSmallMed.length > 0 ? { uri: item.imgSmallMed } : { uri: 'https://dummyimage.com/100x100/ffffff/525152&text=?' }}
-                        avatarStyle={{height: 80, width: 50, alignSelf: "flex-end" }}
+                        avatarStyle={{height: 100, width: 100, alignSelf:'flex-end', borderRadius: 50 }}
+                        avatarContainerStyle={{width: 50}}
                         />
                     )
                 }}

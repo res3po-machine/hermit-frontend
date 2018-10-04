@@ -29,6 +29,11 @@ const mapDispatchtoProps = (dispatch) => bindActionCreators({
 class FavTrailsScreen extends React.Component {
   static navigationOptions = {
     title: 'My Fav Trails',
+    headerMode: 'screen',
+    headerTintColor: '#fff',
+    headerStyle: {
+        backgroundColor: '#8A3434',
+      },
   };
 
   componentDidMount = async () => {

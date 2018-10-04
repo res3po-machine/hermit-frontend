@@ -98,8 +98,10 @@ class FavList extends Component {
                                 </Text>
                             </View>
                         }
+                        roundAvatar
                         avatar={{ uri: item.imgSmallMed }}
-                        avatarStyle={{height: 80, width: 50, alignSelf: "flex-end" }}
+                        avatarStyle={{height: 100, width: 100, alignSelf: "flex-end", borderRadius: 50 }}
+                        avatarContainerStyle={{width: 50}}
                         />
                     )
                 }}

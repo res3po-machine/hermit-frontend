@@ -97,14 +97,16 @@ class FavToolbar extends Component {
                    
                     <Icon
                     iconStyle={{paddingVertical: 5, paddingHorizontal: 5, alignSelf: 'flex-start'}}
-                    color="white"
+                    color={this.state.showCal ? '#FFAB33' : '#fff'}
+                    underlayColor="transparent"
                     name='calendar'
                     type="font-awesome"
                     onPress={() => this.setState({...this.state, showCal: !this.state.showCal})} />
 
                     <Icon
                     iconStyle={{paddingVertical: 5, paddingHorizontal: 5, alignSelf: 'flex-start'}}
-                    color="white"
+                    color={this.state.showSort ? '#FFAB33' : '#fff'}
+                    underlayColor="transparent"
                     name='sort'
                     type="font-awesome"
                     onPress={() => this.setState({...this.state, showSort: !this.state.showSort})}

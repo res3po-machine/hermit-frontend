@@ -27,7 +27,12 @@ class CommentPage extends Component {
     }
 
     static navigationOptions = {
-        title: 'Edit/Delete Comment'
+        title: 'Edit/Delete Comment',
+        headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: {
+            backgroundColor: '#448A34',
+        },
     }
 
     componentDidMount = async () => {
