@@ -82,10 +82,65 @@ class FavToolbar extends Component {
     sortBox = () => {
         return (
             <View style={{paddingVertical: 10, justifyContent: 'center'}}>
-                <CheckBox title="None" onPress={() => this.props.changeSort('None')} center title="None" checked={this.props.trails.sort.type === "None" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox title="Difficulty" onPress={() => this.props.changeSort('Difficulty')} center title="Difficulty" checked={this.props.trails.sort.type === "Difficulty" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox title="Rating" onPress={() => this.props.changeSort('Rating')} center title="Rating" checked={this.props.trails.sort.type === "Rating" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
-                <CheckBox title="Length" onPress={() => this.props.changeSort('Length')} center title="Length" checked={this.props.trails.sort.type === "Length" ? true : false} checkedIcon='dot-circle-o' uncheckedIcon='circle-o'/>
+
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <CheckBox 
+                    title="Difficulty Asc." 
+                    onPress={() => this.props.changeSort('Difficulty Asc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Difficulty Asc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                    <CheckBox 
+                    title="Difficulty Desc." 
+                    onPress={() => this.props.changeSort('Difficulty Desc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Difficulty Desc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                </View>
+
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <CheckBox 
+                    title="Rating Asc." 
+                    onPress={() => this.props.changeSort('Rating Asc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Rating Asc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                    <CheckBox 
+                    title="Rating Desc." 
+                    onPress={() => this.props.changeSort('Rating Desc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Rating Desc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                </View>
+
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <CheckBox 
+                    title="Length Asc." 
+                    onPress={() => this.props.changeSort('Length Asc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Length Asc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                    <CheckBox 
+                    title="Length Desc." 
+                    onPress={() => this.props.changeSort('Length Desc.')} 
+                    center 
+                    checked={this.props.trails.sort.type === "Length Desc." ? true : false} 
+                    checkedIcon='dot-circle-o' 
+                    uncheckedIcon='circle-o'/>
+                </View>
+
+                <CheckBox 
+                title="Near Me" 
+                onPress={() => this.props.changeSort('None')} 
+                center 
+                checked={this.props.trails.sort.type === "None" ? true : false} 
+                checkedIcon='dot-circle-o' 
+                uncheckedIcon='circle-o'/>
             </View>
         )
     }

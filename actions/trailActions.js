@@ -107,14 +107,23 @@ export const changeSort = (category) => {
             case "None":
                 dispatch({type: CHANGE_SORT, payload: {type: category, function: sortNone} })
                 return
-            case "Difficulty":
-                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortDiff} })
+            case "Difficulty Asc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortDiffAsc} })
                 return
-            case "Rating":
-                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortRating} })
+            case "Difficulty Desc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortDiffDesc} })
                 return
-            case "Length":
-                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortLength} })
+            case "Rating Asc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortRatingAsc} })
+                return
+            case "Rating Desc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortRatingDesc} })
+                return
+            case "Length Asc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortLengthAsc} })
+                return
+            case "Length Desc.":
+                dispatch({type: CHANGE_SORT, payload: {type: category, function: sortLengthDesc} })
                 return
             default:
                 dispatch({type: CHANGE_SORT, payload: {type: "None", function: sortNone} })
@@ -139,7 +148,7 @@ const getSunday = (d) => {
 const sortNone = (data) => {
     return data
 }
-const sortDiff = (data) => {
+const sortDiffAsc = (data) => {
     const newData = data.map(item => {
         if (item.difficulty === 'green') {
             item['sort'] = 0
@@ -167,16 +176,58 @@ const sortDiff = (data) => {
     })
 }
 
-const sortRating = (data) => {
+const sortDiffDesc = (data) => {
+    const newData = data.map(item => {
+        if (item.difficulty === 'green') {
+            item['sort'] = 0
+            return item
+        }
+        if (item.difficulty === 'greenBlue') {
+            item['sort'] = 1
+            return item
+        }
+        if (item.difficulty === 'blue') {
+            item['sort'] = 2
+            return item
+        }
+        if (item.difficulty === 'blueBlack') {
+            item['sort'] = 3
+            return item
+        }
+        if (item.difficulty === 'black') {
+            item['sort'] = 4
+            return item
+        }
+    })
+    return newData.sort((a,b) => {
+        return b.sort - a.sort
+    })
+}
+
+const sortRatingAsc = (data) => {
+    let newData = [ ...data ]
+    return newData.sort((a,b) => {
+        return a.stars - b.stars
+    })
+}
+
+const sortRatingDesc = (data) => {
     let newData = [ ...data ]
     return newData.sort((a,b) => {
         return b.stars - a.stars
     })
 }
 
-const sortLength = (data) => {
+const sortLengthAsc = (data) => {
     let newData = [ ...data ]
     return newData.sort((a,b) => {
         return a.length - b.length
+    })
+}
+
+const sortLengthDesc = (data) => {
+    let newData = [ ...data ]
+    return newData.sort((a,b) => {
+        return b.length - a.length
     })
 }

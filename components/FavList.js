@@ -94,7 +94,7 @@ class FavList extends Component {
                             <View>
                                 <Text style={styles.subtitle}>{item.location}</Text>
                                 <Text style={styles.subtitle}>
-                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)}
+                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)} {`  ${item.length} miles`}
                                 </Text>
                             </View>
                         }

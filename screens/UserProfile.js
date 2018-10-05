@@ -36,7 +36,17 @@ class UserProfile extends Component {
                 <ScrollView>
                     <UserHeader />
                     <View style={{paddingVertical: 5}}>
-                        <Button title="LOGOUT" onPress={this.logout} buttonStyle={{paddingVertical: 5}} />
+                        <Button 
+                        title="LOGOUT" 
+                        onPress={this.logout} 
+                        buttonStyle={{
+                            paddingVertical: 5,
+                            backgroundColor: "rgba(255, 171,51, 1)",
+                            height: 45,
+                            borderColor: "transparent",
+                            borderWidth: 0,
+                            borderRadius: 100,
+                          }} />
 
                     </View>
 
