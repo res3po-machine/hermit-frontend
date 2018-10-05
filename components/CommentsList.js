@@ -46,7 +46,13 @@ class CommentsList extends Component {
             <View>
                 <Card containerStyle={{padding: 0}} >
                     <FormLabel for="body">Post a Comment:</FormLabel>
-                    <FormInput multiline={true} style={{paddingBottom: 10}} onChangeText={(text) => this.setState({body: text})} value={this.state.body} name="body"/>
+                    <FormInput 
+                    multiline={true} 
+                    numberOfLines={10}
+                    style={{paddingBottom: 10}} 
+                    inputStyle={{width: 280}}
+                    onChangeText={(text) => this.setState({body: text})} value={this.state.body} 
+                    name="body"/>
                     <Button 
                         loading={this.props.comments.postLoading}
                         onPress={() => this.onSubmit()} 

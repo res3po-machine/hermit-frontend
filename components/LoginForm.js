@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { Card, Button, FormLabel, FormInput} from 'react-native-elements'
+import { ColorDotsLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

@@ -46,10 +46,10 @@ class ProfileHeader extends Component {
 
     buzzTranslate = (buzz) => {
         console.log(typeof buzz)
-        if (!buzz || buzz === null || buzz === 0) return <Text>Very Few People</Text>
-        if (buzz > 0 && buzz <= 10) return <Text>A Handful of People</Text>
+        if (!buzz || buzz === null || buzz === 0) return <Text>Relatively Empty</Text>
+        if (buzz > 0 && buzz <= 10) return <Text>Sparsely Populated</Text>
         if (buzz > 10 && buzz <= 30) return <Text>Regular Traffic</Text>
-        if (buzz > 30) return <Text>Very Many People</Text>
+        if (buzz > 30) return <Text>Highly Populated</Text>
     }
 
     render() {
@@ -60,6 +60,7 @@ class ProfileHeader extends Component {
             <ScrollView style={{backgroundColor: '#fff'}}>
                 <Tile
                     imageSrc={{uri: thisTrail.imgMedium}}
+                    activeOpacity={1}
                     featured
                     title={thisTrail.name}
                     />
