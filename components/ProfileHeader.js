@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
-import { View, Text, FlatList, StyleSheet, AsyncStorage, ScrollView } from 'react-native'
-import { Avatar, Card, Divider, ButtonGroup, Rating, Icon, ListItem, Tile } from 'react-native-elements'
-import moment from 'moment'
-import FavHeart from './FavHeart'
-import { DoubleCircleLoader } from 'react-native-indicator'
+import { Text, StyleSheet, AsyncStorage, ScrollView } from 'react-native'
+import { Card, ButtonGroup, Rating, Icon, ListItem, Tile } from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { switchView, getBuzz } from '../actions/trailActions'
 import { getFavsTrail } from '../actions/favActions'
+
+import { DoubleCircleLoader } from 'react-native-indicator'
+import moment from 'moment'
+import FavHeart from './FavHeart'
 
 const mapStateToProps = ({trails, fav_trails}) => ({trails, fav_trails})
 const maptDispatchtoProps = (dispatch) => bindActionCreators({
@@ -16,15 +17,18 @@ const maptDispatchtoProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 class ProfileHeader extends Component {
-    async componentDidMount() {
-        const preToken = await AsyncStorage.getItem('hermitToken')
-        const token = JSON.parse(preToken)
+    componentDidMount = async () => {
+        const token = await this.getToken()
         const regTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
         const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
         const thisTrail = regTrail ? regTrail : favTrail
-        console.log(thisTrail)
         await this.props.getBuzz(thisTrail, this.props.trails.date)
         await this.props.getFavsTrail(thisTrail.id, token.token)
+    }
+
+    getToken = async () => {
+        const preToken = await AsyncStorage.getItem('hermitToken')
+        return JSON.parse(preToken)
     }
 
     difficulty = (diffCode) => {
@@ -45,7 +49,6 @@ class ProfileHeader extends Component {
     }
 
     buzzTranslate = (buzz) => {
-        console.log(typeof buzz)
         if (!buzz || buzz === null || buzz === 0) return <Text>Relatively Empty</Text>
         if (buzz > 0 && buzz <= 10) return <Text>Sparsely Populated</Text>
         if (buzz > 10 && buzz <= 30) return <Text>Regular Traffic</Text>
@@ -53,23 +56,24 @@ class ProfileHeader extends Component {
     }
 
     render() {
+        // Not super efficient; revisit
         const regTrail = this.props.trails.data.find(trail => trail.id === this.props.trails.trailSelect)
         const favTrail = this.props.fav_trails.full.find(trail => trail.id === this.props.trails.trailSelect)
         const thisTrail = regTrail ? regTrail : favTrail
         return (
-            <ScrollView style={{backgroundColor: '#fff'}}>
+            <ScrollView style={styles.container}>
+
                 <Tile
-                    imageSrc={{uri: thisTrail.imgMedium}}
-                    activeOpacity={1}
-                    featured
-                    title={thisTrail.name}
-                    />
+                imageSrc={{uri: thisTrail.imgMedium}}
+                activeOpacity={1}
+                featured
+                title={thisTrail.name}
+                />
+
                 <Card
-                containerStyle={{marginVertical: 0, marginHorizontal: 0}}
-                // image={{uri: thisTrail.imgMedium}}
-                // imageStyle={{borderRadius: 50}}
-                >
-                <ListItem
+                containerStyle={styles.profileContainer}>
+
+                    <ListItem
                     hideChevron
                     leftIcon={
                         <Icon
@@ -78,11 +82,11 @@ class ProfileHeader extends Component {
                         color='grey' />
                     }
                     subtitle={thisTrail.summary}
-                    subtitleStyle={{flexWrap: 'wrap', paddingLeft: 10}}
-                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    subtitleStyle={styles.subText}
+                    subtitleContainerStyle={styles.subContainer}
                     subtitleNumberOfLines={10}
                     />
-                <ListItem
+                    <ListItem
                     hideChevron
                     leftIcon={
                         <Icon
@@ -91,9 +95,9 @@ class ProfileHeader extends Component {
                         color='grey' />
                     }
                     subtitle={this.difficulty(thisTrail.difficulty)}
-                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    subtitleContainerStyle={styles.subContainer}
                     />
-                <ListItem
+                    <ListItem
                     hideChevron
                     leftIcon={
                         <Icon
@@ -101,44 +105,54 @@ class ProfileHeader extends Component {
                         type='font-awesome'
                         color='grey' />
                     }
-                    subtitle={<Rating 
+                    subtitle={
+                        <Rating 
                         imageSize={20} 
                         readonly 
                         fractions={1} 
-                        startingValue={thisTrail.stars} />}
-                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                        startingValue={thisTrail.stars} />
+                    }
+                    subtitleContainerStyle={styles.subContainer}
                     />
-                <ListItem
+                    <ListItem
                     hideChevron
                     leftIcon={
                         <FavHeart />
                     }
                     subtitle={
                         <Text>
-                            <Icon name="heart" type="font-awesome" color="red" size={15} />'s ({this.props.fav_trails.isLoading ? <DoubleCircleLoader size={20} color="#FFAB33"/> : this.props.fav_trails.count})
+                            <Icon 
+                            name="heart" 
+                            type="font-awesome" 
+                            color="red" 
+                            size={15} />'s ({this.props.fav_trails.isLoading ? 
+                                                <DoubleCircleLoader size={20} color="#FFAB33"/> : 
+                                                this.props.fav_trails.count})
                         </Text>
                     }
-                    subtitleContainerStyle={{flexDirection: 'row-reverse'}}
+                    subtitleContainerStyle={styles.subContainer}
                     />
-                <ListItem
+                    <ListItem
                     hideChevron
-                    containerStyle={{borderBottomWidth: 0}}
+                    containerStyle={styles.listBottom}
                     title={
-                        <Text style={{fontSize: 16, alignSelf: 'center'}}>
+                        <Text style={styles.prediction}>
                             For {moment(this.props.trails.date).format("MMM Do YYYY")}, expect:
                         </Text>
                     }
-                    
-                    subtitle={this.props.trails.buzzLoading ? <DoubleCircleLoader size={20} color="#FFAB33"/> : this.buzzTranslate(this.props.trails.buzz)}
-                    subtitleContainerStyle={{alignSelf: 'center', paddingTop: 5}}
+                    subtitle={this.props.trails.buzzLoading ? 
+                                <DoubleCircleLoader size={20} color="#FFAB33"/> : 
+                                this.buzzTranslate(this.props.trails.buzz)}
+                    subtitleContainerStyle={styles.predictionSub}
                     />
-                    
+                        
                     {/* Re-Add this feature when pictures are incorporated */}
                     {/* <ButtonGroup
                         buttons={['COMMENTS', 'PICS']}
                         containerStyle={{height: 40}}
                         selectedIndex={this.props.trails.profView}
                         onPress={() => this.props.switchView(this.props.trails.profView)} /> */}
+
                 </Card>
             </ScrollView>
         )
@@ -146,3 +160,31 @@ class ProfileHeader extends Component {
 }
 
 export default connect(mapStateToProps, maptDispatchtoProps)(ProfileHeader)
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff'
+    },
+    profileContainer: {
+        marginVertical: 0, 
+        marginHorizontal: 0
+    },
+    subText: {
+        flexWrap: 'wrap', 
+        paddingLeft: 10
+    },
+    subContainer: {
+        flexDirection: 'row-reverse'
+    },
+    listBottom: {
+        borderBottomWidth: 0
+    },
+    prediction: {
+        fontSize: 16, 
+        alignSelf: 'center'
+    },
+    predictionSub: {
+        alignSelf: 'center', 
+        paddingTop: 5
+    }
+})

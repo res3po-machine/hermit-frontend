@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { Card, Button, FormLabel, FormInput} from 'react-native-elements'
-import { ColorDotsLoader } from 'react-native-indicator'
+import { View, Text, StyleSheet } from 'react-native'
+import { Button, FormInput} from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -22,15 +21,14 @@ class LoginForm extends Component {
         }
     }
 
-    onChange = (e) => {
+    onChange = (input) => {
         this.setState({
             ...this.state,
-            [e.name]: e.value
+            [input.name]: input.value
         })
     }
 
-    onSubmit = async (e) => {
-        e.preventDefault()
+    onSubmit = async () => {
         try {
             await this.props.userLogin(this.state)
             if (!this.props.users.showLoginError) {
@@ -40,7 +38,6 @@ class LoginForm extends Component {
                 })
                 this.props.navigation('AuthLoading')
             }
-
         } catch (e) {
             console.log(e)
         }
@@ -49,60 +46,46 @@ class LoginForm extends Component {
 
     render = () => {
         return (
-            <View style={{paddingBottom: 20, width: 350, alignContent: 'center'}}>
+            <View style={styles.container}>
 
-                {/* <Card 
-                containerStyle={styles.formCard}> */}
-                    <Text style={{fontSize: 25, fontWeight: 'bold', alignSelf: 'center', paddingBottom: 10, color: '#fff'}}>Login</Text>
-                    {/* <FormLabel for="email">Email:</FormLabel> */}
-                    {/* Set value to state: this is for convenience */}
-                    <View style={{paddingVertical: 10}}>
-                        <FormInput 
-                        shake={this.props.users.showLoginError}
-                        errorStyle={{color: 'red'}}
-                        error="ERROR"
-                        placeholder="Email" 
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: "#fff"}}
-                        onChangeText={(text) => this.onChange({name: "email", value: text})} 
-                        value={this.state.email} 
-                        autoCapitalize="none" 
-                        textContentType="emailAddress" 
-                        name="email" />
-                    </View>
+                <Text style={styles.title}>Login</Text>
 
-                    <View style={{paddingVertical: 10}}>
-                        <FormInput 
-                        shake={this.props.users.showLoginError}
-                        placeholder="Password" 
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: "#fff"}}
-                        onChangeText={(text) => this.onChange({name: "password", value: text})} 
-                        value={this.state.password} 
-                        autoCapitalize="none" 
-                        secureTextEntry={true} 
-                        name="password" />
-                    </View>
-                    {/* <FormLabel for="password">Password:</FormLabel> */}
+                <View style={styles.inputContainer}>
+                    <FormInput 
+                    shake={this.props.users.showLoginError}
+                    placeholder="Email" 
+                    placeholderTextColor="#fff"
+                    inputStyle={styles.input}
+                    onChangeText={(text) => this.onChange({name: "email", value: text})} 
+                    value={this.state.email} 
+                    autoCapitalize="none" 
+                    textContentType="emailAddress" 
+                    name="email" />
+                </View>
 
-                    <Button 
-                    raised 
-                    loading={this.props.users.isLoading}
-                    onPress={this.onSubmit} 
-                    title="LOGIN"
-                    buttonStyle={{
-                        alignSelf: 'center',
-                        backgroundColor: "rgba(255, 171,51, 1)",
-                        width: 300,
-                        height: 45,
-                        borderColor: "transparent",
-                        borderWidth: 0,
-                        borderRadius: 100
-                      }} />
+                <View style={styles.inputContainer}>
+                    <FormInput 
+                    shake={this.props.users.showLoginError}
+                    placeholder="Password" 
+                    placeholderTextColor="#fff"
+                    inputStyle={styles.input}
+                    onChangeText={(text) => this.onChange({name: "password", value: text})} 
+                    value={this.state.password} 
+                    autoCapitalize="none" 
+                    secureTextEntry={true} 
+                    name="password" />
+                </View>
 
-                      {this.props.users.showLoginError ? <Text style={{color: "#fff", alignSelf: 'center'}}>* Either your email or password is incorrect</Text> : ''}
+                <Button 
+                raised 
+                loading={this.props.users.isLoading}
+                onPress={this.onSubmit} 
+                title="LOGIN"
+                buttonStyle={styles.buttonStyle} />
 
-                {/* </Card> */}
+                {this.props.users.showLoginError ? 
+                    <Text style={{color: "#fff", alignSelf: 'center'}}>* Either your email or password is incorrect</Text> : 
+                    ''}
 
             </View>
         )
@@ -111,14 +94,33 @@ class LoginForm extends Component {
 }
 
 const styles = StyleSheet.create({
-    formCard: {
-        justifyContent: 'space-between',
-        // alignContent: 'space-around',
-        // alignContent: 'center',
-        borderColor: 'transparent',
-      backgroundColor: '#403f41',
-      width: 350,
-      height: 200
-}})
+    container: {
+        paddingBottom: 20, 
+        width: 350, 
+        alignContent: 'center'
+    },
+    title: {
+        fontSize: 25, 
+        fontWeight: 'bold', 
+        alignSelf: 'center', 
+        paddingBottom: 10, 
+        color: '#fff'
+    },
+    inputContainer: {
+        paddingVertical: 10
+    },
+    input: {
+        color: "#fff"
+    },
+    buttonStyle: {
+        alignSelf: 'center',
+        backgroundColor: "rgba(255, 171,51, 1)",
+        width: 300,
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 100
+    }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

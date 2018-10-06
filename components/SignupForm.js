@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import { View, Text, Image, StyleSheet, Picker, ScrollView } from 'react-native'
-import { Card, Button, FormLabel, FormInput} from 'react-native-elements'
+import { Text, StyleSheet, Picker, ScrollView } from 'react-native'
+import { Button, FormLabel, FormInput} from 'react-native-elements'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -25,15 +25,14 @@ class SignupForm extends Component {
         }
     }
 
-    onChange = (e) => {
+    onChange = (input) => {
         this.setState({
             ...this.state,
-            [e.name]: e.value
+            [input.name]: input.value
         })
     }
 
-    onSubmit = async (e) => {
-        e.preventDefault()
+    onSubmit = async () => {
         try {
             await this.props.userSignup(this.state)
             if (!this.props.users.showSignupError) {
@@ -48,7 +47,6 @@ class SignupForm extends Component {
                 })
                 this.props.navigation('AuthLoading')
             }
-
         } catch (e) {
             console.log(e)
         }
@@ -57,106 +55,101 @@ class SignupForm extends Component {
 
     render = () => {
         return (
-            // <View style={{backgroundColor: "#403f41"}}>
-                // <Card style={styles.formCard}>
-                    <ScrollView 
-                    contentContainerStyle={{justifyContent: 'space-around', width: 350, height: 700}}>
-                        {/* <FormLabel for="firstName">First Name:</FormLabel> */}
-                        {/* Set value to state: this is for convenience */}
-                        <FormInput 
-                        onChangeText={(text) => this.onChange({name: "firstName", value: text})} 
-                        value={this.state.firstName} 
-                        textContentType="name" 
-                        placeholder="First Name"
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: '#fff'}} />
+            <ScrollView 
+            contentContainerStyle={styles.container}>
 
-                        {/* <FormLabel for="lastName">Last Name:</FormLabel> */}
-                        <FormInput 
-                        onChangeText={(text) => this.onChange({name: "lastName", value: text})} 
-                        value={this.state.lastName} 
-                        textContentType="name" 
-                        placeholder="Last Name"
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: '#fff'}} />
+                <FormInput 
+                onChangeText={(text) => this.onChange({name: "firstName", value: text})} 
+                value={this.state.firstName} 
+                textContentType="name" 
+                placeholder="First Name"
+                placeholderTextColor="#fff"
+                inputStyle={styles.input} />
 
-                        {/* <FormLabel for="email">Email:</FormLabel> */}
-                        <FormInput 
-                        onChangeText={(text) => this.onChange({name: "email", value: text})} 
-                        value={this.state.email} 
-                        autoCapitalize="none" 
-                        textContentType="emailAddress" 
-                        placeholder="Email"
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: '#fff'}} />
+                <FormInput 
+                onChangeText={(text) => this.onChange({name: "lastName", value: text})} 
+                value={this.state.lastName} 
+                textContentType="name" 
+                placeholder="Last Name"
+                placeholderTextColor="#fff"
+                inputStyle={styles.input} />
 
-                        {/* <FormLabel for="username">Username:</FormLabel> */}
-                        <FormInput 
-                        onChangeText={(text) => this.onChange({name: "username", value: text})} 
-                        value={this.state.username} 
-                        autoCapitalize="none" 
-                        textContentType="username" 
-                        placeholder="Username"
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: '#fff'}} />
+                <FormInput 
+                onChangeText={(text) => this.onChange({name: "email", value: text})} 
+                value={this.state.email} 
+                autoCapitalize="none" 
+                textContentType="emailAddress" 
+                placeholder="Email"
+                placeholderTextColor="#fff"
+                inputStyle={styles.input} />
 
-                        <FormLabel labelStyle={{color: "#fff"}} for="proff">Hiking Profficiency:</FormLabel>
-                        <Picker 
-                        selectedValue={this.state.proff} 
-                        onValueChange={(text) => this.onChange({name: "proff", value: text})} 
-                        name="proff"
-                        itemStyle={{color: '#fff'}}>
-                            <Picker.Item label="Advanced" value="Advanced" />
-                            <Picker.Item label="Intermediate" value="Intermediate" />
-                            <Picker.Item label="Beginner" value="Beginner" />
-                        </Picker>
+                <FormInput 
+                onChangeText={(text) => this.onChange({name: "username", value: text})} 
+                value={this.state.username} 
+                autoCapitalize="none" 
+                textContentType="username" 
+                placeholder="Username"
+                placeholderTextColor="#fff"
+                inputStyle={styles.input} />
 
-                        {/* <FormLabel for="password">Password:</FormLabel> */}
-                        <FormInput 
-                        onChangeText={(text) => this.onChange({name: "password", value: text})} 
-                        value={this.state.password} 
-                        autoCapitalize="none" 
-                        secureTextEntry={true}
-                        placeholder="Password"
-                        placeholderTextColor="#fff"
-                        inputStyle={{color: '#fff'}} />
+                <FormLabel labelStyle={styles.input} for="proff">Hiking Profficiency:</FormLabel>
+                <Picker 
+                selectedValue={this.state.proff} 
+                onValueChange={(text) => this.onChange({name: "proff", value: text})} 
+                name="proff"
+                itemStyle={styles.input}>
+                    <Picker.Item label="Advanced" value="Advanced" />
+                    <Picker.Item label="Intermediate" value="Intermediate" />
+                    <Picker.Item label="Beginner" value="Beginner" />
+                </Picker>
 
-                        {/* <FormLabel for="password2">Re-Enter Password:</FormLabel>
-                        <FormInput onChangeText={(text) => this.onChange({name: "password2", value: text})} value={this.state.password2} autoCapitalize="none" textContentType="password" name="password2" /> */}
+                <FormInput 
+                onChangeText={(text) => this.onChange({name: "password", value: text})} 
+                value={this.state.password} 
+                autoCapitalize="none" 
+                secureTextEntry={true}
+                placeholder="Password"
+                placeholderTextColor="#fff"
+                inputStyle={styles.input} />
 
-                        {this.props.users.showSignupError ? <Text style={{color: '#fff', alignSelf: 'center'}}>* Please Make Sure All Forms Are Filled</Text> : ''}
+                {this.props.users.showSignupError ? 
+                    <Text style={styles.error}>* Please Make Sure All Forms Are Filled</Text> : 
+                    ''}
 
-                        <Button 
-                        raised 
-                        loading={this.props.users.isLoading}
-                        onPress={this.onSubmit} 
-                        title="SIGN UP"
-                        buttonStyle={{
-                            backgroundColor: "rgba(255, 171,51, 1)",
-                            width: 300,
-                            height: 45,
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 100
-                          }} />
+                <Button 
+                raised 
+                loading={this.props.users.isLoading}
+                onPress={this.onSubmit} 
+                title="SIGN UP"
+                buttonStyle={styles.buttonStyle} />
 
-                    </ScrollView>
-
-
-                // {/* </Card> */}
-            // </View>
+            </ScrollView>
         )
     }
-
 }
 
-const styles = StyleSheet.create({
-    formCard: {
-        // justifyContent: 'space-between',
-        backgroundColor: "#403f41",
-        // borderColor: 'transparent',
-        width: 350,
-        height: 200
-}})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'space-around', 
+        width: 350, 
+        height: 700
+    },
+    input: {
+        color: '#fff'
+    },
+    error: {
+        color: '#fff', 
+        alignSelf: 'center'
+    },
+    buttonStyle: {
+        backgroundColor: "rgba(255, 171,51, 1)",
+        width: 300,
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 100
+    }
+})

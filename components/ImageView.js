@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Avatar, Card, Divider } from 'react-native-elements'
+import { Text } from 'react-native'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+
+// Will be used to build Image View for Image features later
 
 const mapStateToProps = ({trails}) => ({trails})
-// const mapDispatchtoProps = (dispatch) => bindActionCreators({
-
-// })
 
 class ImageView extends Component {
     render() {
