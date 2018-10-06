@@ -49,10 +49,10 @@ class LoginForm extends Component {
 
     render = () => {
         return (
-            <View style={{paddingBottom: 20}}>
+            <View style={{paddingBottom: 20, width: 350, alignContent: 'center'}}>
 
-                <Card 
-                containerStyle={styles.formCard}>
+                {/* <Card 
+                containerStyle={styles.formCard}> */}
                     <Text style={{fontSize: 25, fontWeight: 'bold', alignSelf: 'center', paddingBottom: 10, color: '#fff'}}>Login</Text>
                     {/* <FormLabel for="email">Email:</FormLabel> */}
                     {/* Set value to state: this is for convenience */}
@@ -91,6 +91,7 @@ class LoginForm extends Component {
                     onPress={this.onSubmit} 
                     title="LOGIN"
                     buttonStyle={{
+                        alignSelf: 'center',
                         backgroundColor: "rgba(255, 171,51, 1)",
                         width: 300,
                         height: 45,
@@ -101,7 +102,7 @@ class LoginForm extends Component {
 
                       {this.props.users.showLoginError ? <Text style={{color: "#fff", alignSelf: 'center'}}>* Either your email or password is incorrect</Text> : ''}
 
-                </Card>
+                {/* </Card> */}
 
             </View>
         )
@@ -114,8 +115,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         // alignContent: 'space-around',
         // alignContent: 'center',
+        borderColor: 'transparent',
       backgroundColor: '#403f41',
-      borderColor: 'transparent',
       width: 350,
       height: 200
 }})

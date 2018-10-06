@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, AsyncStorage } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { connect } from 'react-redux'
+
 import ProfileHeader from '../components/ProfileHeader'
 import CommentsList from '../components/CommentsList'
 import ImageView from '../components/ImageView'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { getFavsUser } from '../actions/favActions'
 
-const mapStatetoProps = ({trails, fav_trails}) => ({trails, fav_trails})
-// const mapDispatchtoProps = (dispatch) => bindActionCreators({
-//     getFavsUser
-// }, dispatch)
+const mapStatetoProps = ({trails}) => ({trails})
 
 class TrailsProfile extends Component {
     constructor(props) {
@@ -30,15 +27,18 @@ class TrailsProfile extends Component {
         },
     }
 
-
     render() {
         return (
             <View>
-                // <ScrollView style={{backgroundColor: '#fff'}}>
+                 <ScrollView style={styles.container}>
                     <ProfileHeader />
-                    {this.props.trails.profView === 0 ? <CommentsList navigation={this.props.navigation.navigate} /> : <ImageView />}
 
-                // </ScrollView>
+                    {/* This turinary will be used when picture-view is incorporated into the app */}
+                    {this.props.trails.profView === 0 ? 
+                        <CommentsList navigation={this.props.navigation.navigate} /> : 
+                        <ImageView />}
+
+                 </ScrollView>
             </View>
 
         )
@@ -46,3 +46,9 @@ class TrailsProfile extends Component {
 }
 
 export default connect(mapStatetoProps)(TrailsProfile)
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff'
+    }
+})

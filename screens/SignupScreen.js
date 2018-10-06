@@ -1,5 +1,7 @@
 import React from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+
+import { LinearGradient } from 'expo'
 
 import SignupForm from '../components/SignupForm'
 
@@ -14,14 +16,28 @@ export default class SignupScreen extends React.Component {
     }
 
     render () {
-
         return (
-            <View style={{flex: 1, 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                backgroundColor: '#403f41'}}>
-                <SignupForm navigation={this.props.navigation.navigate}/>
+            <View>
+
+                <LinearGradient
+                start={[1, 0]}
+                end={[0, 1]}
+                colors={['#a9a9aa','#403f41']}
+                style={styles.gradient} >
+
+                    <SignupForm navigation={this.props.navigation.navigate}/>
+
+                </LinearGradient>
+
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    gradient: {
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '100%'
+    }
+})

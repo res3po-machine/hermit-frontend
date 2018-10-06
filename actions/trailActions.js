@@ -58,6 +58,7 @@ export const getBuzz = (trail, date) => {
                 trail,
                 date
             })
+            console.log(response)
             if (typeof response.data.data === 'object') {
                 dispatch({type: BUZZ_SUCCESS, payload: response.data.data[0]})
             } else {

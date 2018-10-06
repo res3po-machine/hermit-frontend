@@ -1,25 +1,12 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
-import { AsyncStorage } from 'react-native'
-import { SearchBar, Icon } from 'react-native-elements'
-
-import { MonoText } from '../components/StyledText';
-import LoginForm from '../components/LoginForm';
-import FavList from '../components/FavList'
-import FavToolbar from '../components/FavToolbar'
+import { AsyncStorage, ScrollView, StyleSheet, View } from 'react-native';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getFavsUser, getFavsFull } from '../actions/favActions'
+
+import FavToolbar from '../components/FavToolbar'
+import FavList from '../components/FavList'
 
 const mapStateToProps = ({fav_trails}) => ({fav_trails})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
@@ -39,17 +26,15 @@ class FavTrailsScreen extends React.Component {
   componentDidMount = async () => {
     const preToken = await AsyncStorage.getItem('hermitToken')
     const token = JSON.parse(preToken)
-    // console.log('hi')
     await this.props.getFavsUser(token.id, token.token)
     const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
-    // console.log(favs)
     await this.props.getFavsFull(favs)
 } 
 
   render() {
-    console.log(this.props)
     return (
-      <View style={{flex: 1, backgroundColor: "white"}}>
+      <View style={styles.container}>
+
         <FavToolbar />
         <ScrollView>
           <FavList navigation={this.props.navigation.navigate} />
@@ -62,3 +47,10 @@ class FavTrailsScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(FavTrailsScreen)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    backgroundColor: "white"
+  }
+})

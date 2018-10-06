@@ -1,19 +1,12 @@
-import React from 'react';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements'
-import { WebBrowser } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+import { LinearGradient } from 'expo';
+
 import LoginForm from '../components/LoginForm';
 
-export default class LoginScreen extends React.Component {
+export default class LoginScreen extends Component {
   static navigationOptions = {
     title: 'Please log in',
     headerMode: 'screen',
@@ -25,21 +18,21 @@ export default class LoginScreen extends React.Component {
 
   render() {
     return (
+        <View>
 
-        <View style={styles.container}>
+        <LinearGradient
+        start={[1, 0]}
+        end={[0, 1]}
+        colors={['#a9a9aa','#403f41']}
+        style={styles.gradient} >
 
             <LoginForm navigation={this.props.navigation.navigate}/>
             <Button 
             title="No Account? Sign-up!" 
             onPress={() => this.props.navigation.navigate('SignUp')}
-            buttonStyle={{
-                backgroundColor: "#448A34",
-                width: 300,
-                height: 45,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 100
-              }} />
+            buttonStyle={styles.buttonStyle} />
+
+        </LinearGradient>
             
         </View>
     )
@@ -48,13 +41,17 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
+  gradient: {
     alignItems: 'center', 
     justifyContent: 'center', 
-    backgroundColor: '#403f41'
+    height: '100%'
   },
-  form: {
-    marginHorizontal: 10
+  buttonStyle: {
+    backgroundColor: "#448A34",
+    width: 300,
+    height: 45,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 100
   }
 });

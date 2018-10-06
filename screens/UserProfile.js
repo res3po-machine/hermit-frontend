@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, Text, View, AsyncStorage } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import ProfileHeader from '../components/ProfileHeader'
-import CommentsList from '../components/CommentsList'
-import ImageView from '../components/ImageView'
-import UserHeader from '../components/UserHeader'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userLogout } from '../actions/userActions'
+
+import UserHeader from '../components/UserHeader'
 
 const mapStatetoProps = ({users}) => ({users})
 const mapDispatchtoProps = (dispatch) => bindActionCreators({
@@ -32,28 +30,31 @@ class UserProfile extends Component {
 
     render() {
         return (
-            <View>
-                <ScrollView>
-                    <UserHeader />
-                    <View style={{paddingVertical: 5}}>
-                        <Button 
-                        title="LOGOUT" 
-                        onPress={this.logout} 
-                        buttonStyle={{
-                            paddingVertical: 5,
-                            backgroundColor: "rgba(255, 171,51, 1)",
-                            height: 45,
-                            borderColor: "transparent",
-                            borderWidth: 0,
-                            borderRadius: 100,
-                          }} />
+            <ScrollView>
 
-                    </View>
+                <UserHeader />
+                    <Button 
+                    title="LOGOUT" 
+                    onPress={this.logout} 
+                    style={styles.buttonContainer}
+                    buttonStyle={styles.buttonStyle} />
 
-                </ScrollView>
-            </View>
+            </ScrollView>
         )
     }
 }
 
 export default connect(mapStatetoProps, mapDispatchtoProps)(UserProfile)
+
+const styles = StyleSheet.create({
+    buttonContainer: {
+        paddingVertical: 5
+    },
+    buttonStyle: {
+        backgroundColor: "rgba(255, 171,51, 1)",
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 100,
+    }
+})

@@ -60,7 +60,6 @@ class SignupForm extends Component {
             // <View style={{backgroundColor: "#403f41"}}>
                 // <Card style={styles.formCard}>
                     <ScrollView 
-                    style={{backgroundColor: "#403f41"}}
                     contentContainerStyle={{justifyContent: 'space-around', width: 350, height: 700}}>
                         {/* <FormLabel for="firstName">First Name:</FormLabel> */}
                         {/* Set value to state: this is for convenience */}

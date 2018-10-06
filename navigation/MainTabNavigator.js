@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { StyleSheet } from 'react-native'
+import { createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 
-// import TabBarIcon from '../components/TabBarIcon';
 import Icon from 'react-native-vector-icons/Foundation'
 import Colors from '../constants/Colors';
 
@@ -13,7 +12,6 @@ import CommentPage from '../screens/CommentPage'
 import FavTrailsScreen from '../screens/FavTrailsScreen';
 import UserProfile from '../screens/UserProfile';
 
-
 const TrailsStack = createStackNavigator({
   Home: TrailsScreen,
   Profile: TrailsProfile,
@@ -22,11 +20,11 @@ const TrailsStack = createStackNavigator({
 
 TrailsStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused, tintColor }) => (
+  tabBarIcon: ({ focused }) => (
     <Icon
         name="trees"
         size={26}
-        style={{ marginBottom: -3 }}
+        style={styles.iconStyle}
         color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       />
   ),
@@ -45,7 +43,7 @@ FavsStack.navigationOptions = {
     <Icon
         name="heart"
         size={26}
-        style={{ marginBottom: -3 }}
+        style={styles.iconStyle}
         color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       />
   ),
@@ -62,7 +60,7 @@ UserStack.navigationOptions = {
     <Icon
         name="torso"
         size={26}
-        style={{ marginBottom: -3 }}
+        style={styles.iconStyle}
         color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       />
   ),
@@ -79,5 +77,10 @@ export default createMaterialBottomTabNavigator({
   initialRouteName: 'TrailsStack',
   activeColor: '#f0edf6',
   inactiveColor: '#3e2465',
-  // barStyle: { backgroundColor: 'grey' },
 });
+
+const styles = StyleSheet.create({
+  iconStyle: { 
+    marginBottom: -3 
+  }
+})
