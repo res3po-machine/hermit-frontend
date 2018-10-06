@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { TRAIL_SEARCH_FAILURE } from './trailActions';
+import { favsByUser, fullFavs, favsByTrail, fav, unFav } from '../models/favs'
 
 export const GET_USER_FAVS = 'GET_USER_FAVS'
 export const GET_USER_FAVS_SUCCESS = 'GET_USER_FAVS_SUCCESS'
@@ -21,22 +20,14 @@ export const GET_FULL_FAVS = 'GET_FULL_FAVS'
 export const GET_FULL_FAVS_SUCCESS = 'GET_FULL_FAVS_SUCCESS'
 export const GET_FULL_FAVS_FAILURE = 'GET_FULL_FAVS_FAILURE'
 
-const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
-
 export const getFavsUser = (userID, token) => {
     return async (dispatch) => {
         try {
-            // console.log('in action')
             dispatch({type: GET_USER_FAVS})
-            let response = await axios.get(`${BASE_URL}/favs/user/${userID}`, {
-                headers: {
-                    authorization: `Bearer ${token}`
-                }
-            })
-            // console.log(response)
+            let response = await favsByUser(userID, token)
             dispatch({type: GET_USER_FAVS_SUCCESS, payload: response.data.favs})
         } catch (e) {
-            dispatch({type: TRAIL_SEARCH_FAILURE, payload: e})
+            dispatch({type: GET_USER_FAVS_FAILURE, payload: e})
         }
     }
 }
@@ -44,10 +35,9 @@ export const getFavsUser = (userID, token) => {
 export const getFavsFull = (favArr) => {
     return async (dispatch) => {
         try {
-            console.log('inside actions')
             dispatch({type: GET_FULL_FAVS})
             const ids = favArr.join(',')
-            let response = await axios.get(`https://www.hikingproject.com/data/get-trails-by-id?ids=${ids}&key=200355674-2678e760ceac9155c45dc4d568511bda`)
+            let response = await fullFavs(ids)
             dispatch({type: GET_FULL_FAVS_SUCCESS, payload: response.data.trails})
         } catch (e) {
             dispatch({type: GET_FULL_FAVS_FAIL, payload: e})
@@ -59,12 +49,7 @@ export const getFavsTrail = (trailID, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: GET_TRAIL_FAVS})
-            let response = await axios.get(`${BASE_URL}/favs/${trailID}`, {
-                headers: {
-                    authorization: `Bearer ${token}`
-                }
-            })
-            // console.log(response)
+            let response = await favsByTrail(trailID, token)
             dispatch({type: GET_TRAIL_FAVS_SUCCESS, payload: parseInt(response.data.favs)})
         } catch (e) {
             dispatch({type: GET_TRAIL_FAVS_FAIL, payload: e})
@@ -76,17 +61,7 @@ export const favTrail = (userID, trailID, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: FAV_TRAIL_PENDING})
-            let response = await axios({
-                method: 'post',
-                url: `${BASE_URL}/favs/`,
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-                data: {
-                    user_id: userID,
-                    trail_id: trailID
-                }
-            })
+            let response = await fav(userID, trailID, token)
             dispatch({type: FAV_TRAIL_SUCCESS, payload: response.data.fav})
         } catch (e) {
             dispatch({type: FAV_TRAIL_FAILURE, payload: e})
@@ -98,17 +73,7 @@ export const unFavTrail = (userID, trailID, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: UNFAV_TRAIL_PENDING})
-            let response = await axios({
-                method: 'delete',
-                url: `${BASE_URL}/favs/user/${userID}`,
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-                data: {
-                    trail_id: trailID
-                }
-            })
-            console.log(response)
+            await unFav(userID, trailID, token)
             dispatch({type: UNFAV_TRAIL_SUCCESS, payload: trailID})
         } catch (e) {
             dispatch({type: UNFAV_TRAIL_FAILURE, payload: e})

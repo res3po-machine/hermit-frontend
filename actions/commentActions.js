@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { trailComments, post, update, deleteCom } from '../models/comments'
 
 export const COMMENTS_LOADING = 'COMMENTS_LOADING'
 export const GET_COMMENTS_SUCCESS = 'GET_COMMENTS_SUCCESS'
@@ -18,17 +18,11 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
 export const DELETE_COMMENT_FAIL = 'DELETE_COMMENT_FAIL'
 
-const BASE_URL = 'https://protected-shelf-23735.herokuapp.com/api'
-
 export const commentsByTrail = (trailID, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: COMMENTS_LOADING})
-            let response = await axios.get(`${BASE_URL}/comments/${trailID}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            let response = await trailComments(trailID, token)
             dispatch({type: GET_COMMENTS_SUCCESS, payload: response.data.comments})
         } catch (e) {
             dispatch({type: GET_COMMENTS_FAIL, payload: e})
@@ -36,25 +30,11 @@ export const commentsByTrail = (trailID, token) => {
     }
 }
 
-export const postComment = ({body, userId, trailId, trailName}, token) => {
+export const postComment = (data, token) => {
     return async (dispatch) => {
         try {
-            // console.log({body, userId, trailId, trailName})
             dispatch({type: COMMENT_POSTING})
-            let response = await axios({
-                method: 'post',
-                url: `${BASE_URL}/comments/`,
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-                data: {
-                    user_id: userId,
-                    trail_id: trailId,
-                    trail_name: trailName,
-                    body,
-                    image_id: null
-                }
-            })
+            await post(data, token)
             dispatch({type: COMMENT_POST_SUCCESS})
         } catch (e) {
             dispatch({type: COMMENT_POST_FAILED, payload: e})
@@ -66,17 +46,7 @@ export const patchComment = (id, user_id, body, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: COMMENT_UPDATE})
-            let response = await axios({
-                method: 'patch',
-                url: `${BASE_URL}/comments/${id}`,
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-                data: {
-                    user_id,
-                    body
-                }
-            })
+            await update(id, user_id, body, token)
             dispatch({type: COMMENT_UPDATE_SUCCESS})
         } catch (e) {
             dispatch({type: COMMENT_UPDATE_FAILED, payload: e})
@@ -88,16 +58,7 @@ export const deleteComment = (id, user_id, token) => {
     return async (dispatch) => {
         try {
             dispatch({type: DELETE_COMMENT})
-            let response = await axios({
-                method: 'delete',
-                url: `${BASE_URL}/comments/${id}`,
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-                data: {
-                    user_id
-                }
-            })
+            await deleteCom(id, user_id, token)
             dispatch({type: DELETE_COMMENT_SUCCESS})
         } catch (e) {
             dispatch({type: DELETE_COMMENT_FAIL, payload: e})
@@ -106,7 +67,7 @@ export const deleteComment = (id, user_id, token) => {
 }
 
 export const selectComment = (id) => {
-    return async (dispatch) => {
+    return (dispatch) => {
         dispatch({type: COMMENT_SELECT, payload: id})
     }
 }
