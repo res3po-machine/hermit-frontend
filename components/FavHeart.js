@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, ActivityIndicator, AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native'
 import { Icon } from 'react-native-elements'
+
+import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,14 +32,22 @@ class FavHeart extends Component {
         doesExist ? this.setState({fav: true}) : this.setState({fav: false})
     }
 
-    onFav = async () => {
+    refreshFavs = async () => {
+        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
+        await this.props.getFavsFull(favs)
+    }
+
+    getToken = async () => {
         const preToken = await AsyncStorage.getItem('hermitToken')
-        const token = JSON.parse(preToken)
+        return JSON.parse(preToken)
+    }
+
+    onFav = async () => {
+        const token = await this.getToken()
         await this.props.favTrail(token.id, this.props.trails.trailSelect, token.token)
         await this.props.getFavsTrail(this.props.trails.trailSelect, token.token)
         this.load()
-        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
-        await this.props.getFavsFull(favs)
+        this.refreshFavs()
     }
 
     unFav = async () => {
@@ -46,14 +56,15 @@ class FavHeart extends Component {
         await this.props.unFavTrail(token.id, this.props.trails.trailSelect, token.token)
         await this.props.getFavsTrail(this.props.trails.trailSelect, token.token)
         this.load()
-        const favs = this.props.fav_trails.favs.map(fav => fav.trail_id)
-        await this.props.getFavsFull(favs)
+        this.refreshFavs()
     }
 
     render = () => {
         if (this.props.fav_trails.isLoading) {
             return (
-                <ActivityIndicator />
+                <DoubleCircleLoader 
+                size={20} 
+                color="#FFAB33" />
             )
         } else if (!this.props.fav_trails.isLoading) {
             if (this.state.fav) {
