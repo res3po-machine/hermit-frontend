@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Icon } from 'expo';
 import Icon from 'react-native-vector-icons/Foundation'
 
 import Colors from '../constants/Colors';
