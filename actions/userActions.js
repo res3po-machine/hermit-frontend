@@ -22,7 +22,7 @@ export const userLogin = (credentials) => {
             dispatch({type: USER_LOGIN_PENDING})
 
             let response = await login(credentials)
-            saveToken(response.data);
+            await saveToken(response.data);
             let user = await getUserData(response.data)
 
             dispatch({

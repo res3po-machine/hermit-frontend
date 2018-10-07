@@ -27,3 +27,12 @@ export const getUserData = async ({ id, token }) => {
     })
     return response
 }
+
+export const check = async (token) => {
+    let response = await axios.get(`${BASE_URL}/users/check`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    })
+    return response
+}

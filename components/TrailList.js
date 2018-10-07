@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, ListView } from 'react-native'
-import { List, ListItem, Rating } from 'react-native-elements'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { ListItem, Rating } from 'react-native-elements'
+
 import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
@@ -20,7 +21,7 @@ class TrailList extends Component {
         }
     }
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         await this.props.resetLoad()
         this.load()
     }
@@ -28,7 +29,6 @@ class TrailList extends Component {
     load = async () => {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
-                console.log(position)
                 await this.props.getTrails({ 
                     lat: position.coords.latitude,
                     long: position.coords.longitude,
@@ -36,7 +36,6 @@ class TrailList extends Component {
                     maxLength: this.props.trails.maxLength,
                     minLength: this.props.trails.minLength
                 })
-                // await this.props.getBuzz(this.props.trails.data, this.props.trails.date)
             },
             (error) => console.log(error)
         )
@@ -52,23 +51,14 @@ class TrailList extends Component {
         setTimeout(async () => {
             await this.props.moreTrails()
             await this.load()
-
         }, 1000)
         
     }
 
     rederFooter = () => {
         if (!this.props.trails.isLoading) return null;
-
         return (
-        <View
-            style={{
-            paddingVertical: 20,
-            borderTopWidth: 1,
-            borderColor: "#CED0CE",
-            alignItems: "center"
-            }}
-        >
+        <View style={styles.loader}>
            <DoubleCircleLoader size={80} color="#FFAB33"/>
         </View>
         );
@@ -77,15 +67,15 @@ class TrailList extends Component {
     difficulty = (diffCode) => {
         switch (diffCode) {
             case "green": 
-                return <Text style={{color: "green"}}>Easy</Text>
+                return <Text style={styles.easy}>Easy</Text>
             case "greenBlue":
-                return <Text style={{color: "teal"}}>Easy/Int</Text>
+                return <Text style={styles.easyInt}>Easy/Int</Text>
             case "blue":
-                return <Text style={{color: "orange"}}>Intermediate</Text>
+                return <Text style={styles.int}>Intermediate</Text>
             case "blueBlack":
-                return <Text style={{color: "red"}}>Int/Hard</Text>
+                return <Text style={styles.intHard}>Int/Hard</Text>
             case "black":
-                return <Text style={{color: 'black'}}>Hard</Text>
+                return <Text style={styles.hard}>Hard</Text>
             default:
                 return <Text>Diff Unknown</Text>
         }
@@ -93,8 +83,7 @@ class TrailList extends Component {
 
     render() {
         let data = this.props.trails.sort.function(this.props.trails.data)
-       return (
-           
+        return (
                 <FlatList
                 data={data}
                 keyExtractor={item => `${item.id}`}
@@ -107,15 +96,23 @@ class TrailList extends Component {
                             <View>
                                 <Text style={styles.subtitle}>{item.location}</Text>
                                 <Text style={styles.subtitle}>
-                                    <Rating style={{paddingLeft: 10, paddingTop: 5}} imageSize={12} readonly fractions={1} startingValue={item.stars} /> {this.difficulty(item.difficulty)} {`  ${item.length} miles`}
+                                    <Rating 
+                                    style={styles.rating} 
+                                    imageSize={12} 
+                                    readonly 
+                                    fractions={1} 
+                                    startingValue={item.stars} /> 
+                                    {this.difficulty(item.difficulty)} 
+                                    {`  ${item.length} miles`}
                                 </Text>
                             </View>
                         }
                         roundAvatar
-                        // titleStyle={{paddingLeft: 10}}
-                        avatar={item.imgSmallMed.length > 0 ? { uri: item.imgSmallMed } : { uri: 'https://dummyimage.com/100x100/ffffff/525152&text=?' }}
-                        avatarStyle={{height: 100, width: 100, alignSelf:'flex-end', borderRadius: 50 }}
-                        avatarContainerStyle={{width: 50}}
+                        avatar={item.imgSmallMed.length > 0 ? 
+                                    { uri: item.imgSmallMed } : 
+                                    { uri: 'https://dummyimage.com/100x100/ffffff/525152&text=?' }}
+                        avatarStyle={styles.avatarStyle}
+                        avatarContainerStyle={styles.avatarContainer}
                         />
                     )
                 }}
@@ -123,17 +120,50 @@ class TrailList extends Component {
                 refreshing={true}
                 onEndReached={async () => await this.loadMore()}
                 onEndThreshold={0.001}
-                />
-            
+                /> 
        )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchtoProps)(TrailList)
 
 const styles = StyleSheet.create({
     subtitle: {
         flexDirection: 'row',
         paddingLeft: 10
+    },
+    loader: {
+        paddingVertical: 20,
+        borderTopWidth: 1,
+        borderColor: "#CED0CE",
+        alignItems: "center"
+    },
+    easy: {
+        color: "green"
+    },
+    easyInt: {
+        color: "teal"
+    },
+    int: {
+        color: "orange"
+    },
+    intHard: {
+        color: "red"
+    },
+    hard: {
+        color: 'black'
+    },
+    rating: {
+        paddingLeft: 10, 
+        paddingTop: 5
+    },
+    avatarStyle: {
+        height: 100, 
+        width: 100, 
+        alignSelf:'flex-end', 
+        borderRadius: 50 
+    },
+    avatarContainer: {
+        width: 50
     }
 })
-
-export default connect(mapStateToProps, mapDispatchtoProps)(TrailList)
