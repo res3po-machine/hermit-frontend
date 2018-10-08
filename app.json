@@ -21,8 +21,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "NSLocationWhenInUseUsageDescription": "Allow Hermit to user your location."
+      "supportsTablet": true
     }
   }
 }

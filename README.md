@@ -25,7 +25,7 @@ With hermit, one can stay in-the-know about local hikes (and when NOT to go), fi
 * Fork and clone this repository
 * Run 'npm install' in your terminal
 * Depending on how you'd like to open the project:
-  * Install an iOS simulator on your local machine](http://www.macinstruct.com/node/494)
+  * [Install an iOS simulator on your local machine](http://www.macinstruct.com/node/494)
   * [Install an Android emulaltor on your local machine](https://developer.android.com/studio/run/emulator)
   * Install Expo app on your phone
 * Run 'npm start' or 'expo start'
