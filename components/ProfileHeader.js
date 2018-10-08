@@ -49,10 +49,10 @@ class ProfileHeader extends Component {
     }
 
     buzzTranslate = (buzz) => {
-        if (!buzz || buzz === null || buzz === 0) return <Text>Relatively Empty</Text>
-        if (buzz > 0 && buzz <= 10) return <Text>Sparsely Populated</Text>
-        if (buzz > 10 && buzz <= 30) return <Text>Regular Traffic</Text>
-        if (buzz > 30) return <Text>Highly Populated</Text>
+        if (!buzz || buzz === null || buzz === 0) return <Text style={{color: 'blue', fontWeight: 'bold'}}>Relatively Empty</Text>
+        if (buzz > 0 && buzz <= 10) return <Text style={{color: 'green', fontWeight: 'bold'}}>Sparsely Populated</Text>
+        if (buzz > 10 && buzz <= 30) return <Text style={{color: 'orange', fontWeight: 'bold'}}>Regular Traffic</Text>
+        if (buzz > 30) return <Text style={{color: 'red', fontWeight: 'bold'}}>Highly Populated</Text>
     }
 
     render() {
@@ -186,5 +186,5 @@ const styles = StyleSheet.create({
     predictionSub: {
         alignSelf: 'center', 
         paddingTop: 5
-    }
+    },
 })

@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { ListItem, Rating } from 'react-native-elements'
 
+import { Location, Permissions } from 'expo'
+
 import { DoubleCircleLoader } from 'react-native-indicator'
 
 import { connect } from 'react-redux'
@@ -23,23 +25,34 @@ class TrailList extends Component {
 
     componentDidMount = async () => {
         await this.props.resetLoad()
-        this.load()
+        await this.load()
+    }
+
+    _getLocationAsync = async () => {
+        try {
+            let { status } = await Permissions.askAsync(Permissions.LOCATION)
+            // Must add route if user says 'no'
+    
+            let location = await Location.getCurrentPositionAsync({})
+            return location
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     load = async () => {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                await this.props.getTrails({ 
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                    maxTrail: this.props.trails.visualMax,
-                    maxLength: this.props.trails.maxLength,
-                    minLength: this.props.trails.minLength
-                })
-            },
-            (error) => console.log(error)
-        )
-
+        try {
+            const location = await this._getLocationAsync()
+            await this.props.getTrails({
+                lat: location.coords.latitude,
+                long: location.coords.longitude,
+                maxTrail: this.props.trails.visualMax,
+                maxLength: this.props.trails.maxLength,
+                minLength: this.props.trails.minLength
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     select = (id) => {
