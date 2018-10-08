@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "hermit-app",
-    "description": "A very interesting project.",
+    "description": "Hermit is an app that helps to alleviate the problem of hiking trail overcrowding by predicting whether or not a trail will be busy on a given day. Enjoy the benefits of nature without all of those pesky people around.",
     "slug": "hermit-app",
     "privacy": "public",
     "sdkVersion": "30.0.0",
@@ -21,7 +21,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dilloneaster.hermit"
     }
   }
 }
