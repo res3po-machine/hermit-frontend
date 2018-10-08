@@ -64,4 +64,4 @@ Back End:
 
 If you have any questions, don't hesitate to reach out at [johndilloneaster@gmail.com](mailto:johndilloneaster@gmail.com)
 
-[logo]: https://github.com/easterjs/hermit-frontend/raw/master/assets/images/hermiticon3.png "Hermit Logo"
+[logo]: https://github.com/easterjs/hermit-frontend/assets/images/hermiticon3.png "Hermit Logo"
