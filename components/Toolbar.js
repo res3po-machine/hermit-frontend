@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { Icon, Slider, CheckBox } from 'react-native-elements'
 
+import { Location, Permissions } from 'expo'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { dateChange, getTrails, resetLoad, changeMax, changeMin, changeSort } from '../actions/trailActions'
@@ -24,25 +26,37 @@ class Toolbar extends Component {
         }
     }
 
+    _getLocationAsync = async () => {
+        try {
+            let { status } = await Permissions.askAsync(Permissions.LOCATION)
+            // Must add route if user says 'no'
+
+            let location = await Location.getCurrentPositionAsync({})
+            return location
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     dateChange = async (day) => {
         this.setState({showCal: false})
         this.props.dateChange(day.dateString)
     }
 
     reLoad = async () => {
-        await this.props.resetLoad()
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                await this.props.getTrails({ 
-                    lat: position.coords.latitude,
-                    long: position.coords.longitude,
-                    maxTrail: this.props.trails.visualMax,
-                    maxLength: this.props.trails.maxLength,
-                    minLength: this.props.trails.minLength
-                })
-            },
-            (error) => console.log(error)
-        )
+        try {
+            await this.props.resetLoad()
+            const location = await this._getLocationAsync()
+            await this.props.getTrails({
+                lat: location.coords.latitude,
+                long: location.coords.longitude,
+                maxTrail: this.props.trails.visualMax,
+                maxLength: this.props.trails.maxLength,
+                minLength: this.props.trails.minLength
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     handleMax = async (value) => {
