@@ -22,6 +22,17 @@ With hermit, one can stay in-the-know about local hikes (and when NOT to go), fi
 * Keep a list of favorite trails to refer back to
 * Logout
 
+### Screenshots
+
+* Login
+![login](https://snag.gy/kiS2Az.jpg "Login page")
+* Home Page/Trail List with toolbar options
+![home page](https://snag.gy/qG8hKO.jpg "Home page with toolbar options")
+* Trail Profile with comments
+![trail profile](https://snag.gy/VI0YZA.jpg "Trail page with comments")
+* User Page
+![user page](https://snag.gy/aF9CIi.jpg "User profile with logout")
+
 ### TO INSTALL
 
 * Fork and clone this repository
