@@ -1,6 +1,8 @@
 # hermit Frontend
 -------------------------------
 
+[logo]
+
 ### ABOUT THIS PROJECT
 
 This app was inpsired by the many times I've committed to going hiking in Washington where the trail is not only packed, but also LOUD. This might just be me, but when I spend the time to go out into nature, I don't want to feel like I'm still in the city. I wanted to make an app that allows me to predict when trails are going to be busy, so I can avoid those days. Hence hermit was born.
@@ -61,3 +63,5 @@ Back End:
 [Dillon Easter](http://johndilloneaster.surge.sh/)
 
 If you have any questions, don't hesitate to reach out at [johndilloneaster@gmail.com](mailto:johndilloneaster@gmail.com)
+
+[logo]: https://github.com/easterjs/hermit-frontend/raw/master/assets/images/hermiticon3.png "Hermit Logo"
