@@ -1,7 +1,7 @@
 # hermit Frontend
 -------------------------------
 
-[logo]
+![hermit logo][logo]
 
 ### ABOUT THIS PROJECT
 
