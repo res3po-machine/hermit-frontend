@@ -1,5 +1,4 @@
 # hermit Frontend
--------------------------------
 
 ![hermit logo][logo]
 
@@ -63,7 +62,7 @@ Front End:
 * React Native Elements
 * React Navigation
 * Redux/React-Redux
-* REI Hiking Project API
+* [REI Hiking Project API](https://www.hikingproject.com/data)
 
 Back End:
 * Axios
