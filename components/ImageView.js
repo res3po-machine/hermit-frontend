@@ -10,7 +10,7 @@ const mapStateToProps = ({trails}) => ({trails})
 class ImageView extends Component {
     render() {
         return (
-            <Text>Image</Text>
+            <Text>Image Here</Text>
         )
     }
 }
